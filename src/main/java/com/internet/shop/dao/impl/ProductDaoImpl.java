@@ -1,19 +1,17 @@
-package dao.impl;
+package com.internet.shop.dao.impl;
 
-import dao.ProductDao;
+import com.internet.shop.dao.ProductDao;
+import com.internet.shop.db.Storage;
+import com.internet.shop.lib.Dao;
+import com.internet.shop.model.Product;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
-import db.Storage;
-import lib.Dao;
-import model.Product;
 
 @Dao
 public class ProductDaoImpl implements ProductDao {
     @Override
     public Product create(Product product) {
-        Storage.products.add(product);
+        Storage.addProduct(product);
         return product;
     }
 
@@ -26,16 +24,11 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product update(Product product) {
-        Product originalProduct = null;
-        Optional<Product> originalProductOptional = Storage.products.stream()
+        return Storage.products.stream()
                 .filter(x -> x.getId().equals(product.getId()))
-                .findFirst();
-        if (originalProductOptional.isPresent()) {
-            originalProduct = originalProductOptional.get();
-            int index = Storage.products.indexOf(originalProduct);
-            Storage.products.set(index, product);
-        }
-        return product;
+                .map(p -> product)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

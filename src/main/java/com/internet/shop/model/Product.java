@@ -1,4 +1,4 @@
-package model;
+package com.internet.shop.model;
 
 public class Product {
     Long id;
@@ -32,5 +32,13 @@ public class Product {
 
     public double getPrice() {
         return price;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", price=" + price + '}';
     }
 }

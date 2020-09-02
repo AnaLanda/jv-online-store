@@ -1,12 +1,14 @@
-package service;
+package com.internet.shop.dao;
 
+import com.internet.shop.model.Product;
 import java.util.List;
-import model.Product;
+import java.util.Optional;
 
-public interface ProductService {
+public interface ProductDao {
+
     Product create(Product product);
 
-    Product getById(Long productId);
+    Optional<Product> getById(Long productId);
 
     Product update(Product product);
 
