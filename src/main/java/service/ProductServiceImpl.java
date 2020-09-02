@@ -19,21 +19,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getById(Long productId) {
-        return null;
+        return productDao.getById(productId).get();
     }
 
     @Override
     public Product update(Product product) {
-        return null;
+        return productDao.update(product);
     }
 
     @Override
     public boolean deleteById(Long productId) {
-        return false;
+        return productDao.deleteById(productId);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return productDao.getAllProducts();
     }
 }

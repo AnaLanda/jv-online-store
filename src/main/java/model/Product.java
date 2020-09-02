@@ -14,11 +14,23 @@ public class Product {
         this.id = id;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
