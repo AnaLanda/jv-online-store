@@ -19,8 +19,10 @@ public class Application {
         product1.setName("Second-hand guitar");
         product1.setPrice(8000);
         productService.update(product1);
-        System.out.println("Storage list with an updated product: " + productService.getAllProducts());
+        System.out.println("Storage list with an updated product: "
+                + productService.getAllProducts());
         productService.deleteById(product2.getId());
-        System.out.println("Storage list after a product was deleted: " + productService.getAllProducts());
+        System.out.println("Storage list after a product was deleted: "
+                + productService.getAllProducts());
     }
 }
