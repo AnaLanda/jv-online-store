@@ -6,6 +6,7 @@ import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Product;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Dao
 public class ProductDaoImpl implements ProductDao {
@@ -24,11 +25,12 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product update(Product product) {
-        return Storage.products.stream()
-                .filter(originalProduct -> originalProduct.getId().equals(product.getId()))
-                .map(originalProduct -> product)
+        List<Product> products = getAllProducts();
+        IntStream.range(0, products.size())
+                .filter(originalProduct -> products.get(originalProduct).getId().equals(product.getId()))
                 .findFirst()
-                .orElse(null);
+                .ifPresent(originalProduct -> products.set(originalProduct, product));
+        return product;
     }
 
     @Override
