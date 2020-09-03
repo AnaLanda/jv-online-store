@@ -27,10 +27,9 @@ public class ProductDaoImpl implements ProductDao {
     public Product update(Product product) {
         List<Product> products = getAllProducts();
         IntStream.range(0, products.size())
-                .filter(originalProduct
-                        -> products.get(originalProduct).getId().equals(product.getId()))
-                .findFirst()
-                .ifPresent(originalProduct -> products.set(originalProduct, product));
+                .filter(index
+                        -> products.get(index).getId().equals(product.getId()))
+                .forEach(index -> products.set(index, product));
         return product;
     }
 
