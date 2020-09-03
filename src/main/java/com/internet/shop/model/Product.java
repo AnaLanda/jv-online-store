@@ -1,9 +1,9 @@
 package com.internet.shop.model;
 
 public class Product {
-    Long id;
-    String name;
-    double price;
+    private Long id;
+    private String name;
+    private double price;
 
     public Product(String name, double price) {
         this.name = name;

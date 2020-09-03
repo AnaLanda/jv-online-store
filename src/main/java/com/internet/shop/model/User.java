@@ -1,10 +1,10 @@
 package com.internet.shop.model;
 
 public class User {
-    Long id;
-    String name;
-    String login;
-    String password;
+    private Long id;
+    private String name;
+    private String login;
+    private String password;
 
     public User(String name, String login, String password) {
         this.name = name;

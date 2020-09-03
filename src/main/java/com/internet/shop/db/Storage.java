@@ -9,8 +9,8 @@ public class Storage {
     private static Long productId = 0L;
 
     public static void addProduct(Product product) {
-        productId++;
         product.setId(productId);
+        productId++;
         products.add(product);
     }
 }
