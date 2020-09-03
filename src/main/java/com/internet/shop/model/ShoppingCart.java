@@ -36,4 +36,12 @@ public class ShoppingCart {
     public Long getUserId() {
         return userId;
     }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{"
+                + "id=" + id
+                + ", products=" + products
+                + ", userId=" + userId + '}';
+    }
 }
