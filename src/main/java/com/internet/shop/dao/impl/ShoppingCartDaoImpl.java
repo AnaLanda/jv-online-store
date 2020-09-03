@@ -11,12 +11,17 @@ import java.util.Optional;
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {
-        Storage.addShoppingCart(shoppingCart);
+        Storage.addCart(shoppingCart);
         return shoppingCart;
     }
 
     @Override
     public ShoppingCart addProduct(ShoppingCart shoppingCart, Product product) {
+        if (!Storage.products.contains(product)) {
+            System.out.println("Unfortunately, " + product.getName()
+                    + " cannot be added to the cart. \n");
+            return shoppingCart;
+        }
         getByUserId(shoppingCart.getUserId())
                 .get()
                 .getProducts()

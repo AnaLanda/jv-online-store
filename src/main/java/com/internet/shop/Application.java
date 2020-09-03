@@ -30,15 +30,28 @@ public class Application {
                 + productService.getAllProducts());
         System.out.println("Updated items: " + productService.getAllProducts());
         UserService userService = (UserService) injector.getInstance(UserService.class);
-        User user = new User("Dylan", "the_good_boy", "dogsarethebest101");
-        userService.create(user);
-        System.out.println(user);
-        ShoppingCartService shoppingCartService = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
-        ShoppingCart shoppingCart = new ShoppingCart(user.getId());
-        System.out.println(shoppingCart);
-//        shoppingCartService.addProduct(shoppingCart, product1);
-//        shoppingCartService.addProduct(shoppingCart, product2);
-//        shoppingCartService.addProduct(shoppingCart, product3);
-//        System.out.println(shoppingCartService.getByUserId(user.getId()));
+        User user1 = new User("Dylan", "guitar_lover", "dogsarethebest_101");
+        User user2 = new User("Davina", "cello_player", "dogsarethebest_102");
+        userService.create(user1);
+        userService.create(user2);
+        System.out.println("Users: " + userService.getAll() + "\n");
+
+        ShoppingCartService shoppingCartService
+                = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
+        ShoppingCart shoppingCart1 = new ShoppingCart(user1.getId());
+        ShoppingCart shoppingCart2 = new ShoppingCart(user2.getId());
+        shoppingCartService.create(shoppingCart1);
+        shoppingCartService.create(shoppingCart2);
+        System.out.println("First user's shopping cart: " + shoppingCart1 + "\n");
+        System.out.println("Second user's shopping cart: " + shoppingCart2 + "\n");
+        shoppingCartService.addProduct(shoppingCart1, product1);
+        shoppingCartService.addProduct(shoppingCart1, product2);
+        shoppingCartService.addProduct(shoppingCart1, product3);
+        System.out.println("First user's shopping cart with products: "
+                + shoppingCartService.getByUserId(user1.getId()) + "\n");
+        shoppingCartService.deleteProduct(shoppingCartService.getByUserId(user1.getId()),
+                productService.getById(product1.getId()));
+        System.out.println("First user's shopping cart with one remaining product: "
+                + shoppingCartService.getByUserId(user1.getId()) + "\n");
     }
 }
