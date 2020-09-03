@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 public class OrderDaoImpl implements OrderDao {
     @Override
     public Order completeOrder(ShoppingCart shoppingCart) {
-
-        return null;
+        Order order = new Order(shoppingCart.getUserId());
+        order.setProducts(shoppingCart.getProducts());
+        Storage.orders.add(order);
+        return order;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean delete(Long orderId) {
-        return Storage.orders.removeIf(order -> order.getId().equals(orderId));
+        return Storage.orders
+                .removeIf(order -> order.getId().equals(orderId));
     }
 }

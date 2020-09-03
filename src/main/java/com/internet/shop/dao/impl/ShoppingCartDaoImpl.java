@@ -9,17 +9,25 @@ import java.util.Optional;
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {
-        return null;
+        Storage.addShoppingCart(shoppingCart);
+        return shoppingCart;
     }
 
     @Override
     public ShoppingCart addProduct(ShoppingCart shoppingCart, Product product) {
-        return null;
+        getByUserId(shoppingCart.getUserId())
+                .get()
+                .getProducts()
+                .add(product);
+        return shoppingCart;
     }
 
     @Override
     public boolean deleteProduct(ShoppingCart shoppingCart, Product product) {
-        return false;
+        return getByUserId(shoppingCart.getUserId())
+                .get()
+                .getProducts()
+                .remove(product);
     }
 
     @Override
@@ -36,6 +44,8 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public boolean delete(ShoppingCart shoppingCart) {
-        return false;
+        return Storage.shoppingCarts
+                .removeIf(shoppingCartInStorage -> shoppingCartInStorage.getId()
+                        .equals(shoppingCart.getId()));
     }
 }
