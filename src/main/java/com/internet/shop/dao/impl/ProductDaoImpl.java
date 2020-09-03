@@ -25,8 +25,8 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Product update(Product product) {
         return Storage.products.stream()
-                .filter(x -> x.getId().equals(product.getId()))
-                .map(p -> product)
+                .filter(originalProduct -> originalProduct.getId().equals(product.getId()))
+                .map(originalProduct -> product)
                 .findFirst()
                 .orElse(null);
     }
