@@ -19,16 +19,16 @@ public class Application {
         productService.create(product1);
         productService.create(product2);
         productService.create(product3);
-        System.out.println("Original storage list: " + productService.getAllProducts() + "\n");
+        System.out.println("Original storage list: " + productService.getAll() + "\n");
         product1.setName("Second-hand guitar");
         product1.setPrice(8000);
         productService.update(product1);
         System.out.println("Storage list with an updated product: "
-                + productService.getAllProducts() + "\n");
-        productService.deleteById(product2.getId());
+                + productService.getAll() + "\n");
+        productService.delete(product2.getId());
         System.out.println("Storage list after a product was deleted: "
-                + productService.getAllProducts() + "\n");
-        System.out.println("Updated items: " + productService.getAllProducts() + "\n");
+                + productService.getAll() + "\n");
+        System.out.println("Updated items: " + productService.getAll() + "\n");
 
         UserService userService = (UserService) injector.getInstance(UserService.class);
         User user1 = new User("Dylan", "guitar_lover", "dogsarethebest_101");
@@ -52,10 +52,10 @@ public class Application {
         shoppingCartService.addProduct(shoppingCart1, product2);
         shoppingCartService.addProduct(shoppingCart1, product3);
         System.out.println("First user's shopping cart with products: "
-                + shoppingCartService.getByUserId(user1.getId()) + "\n");
-        shoppingCartService.deleteProduct(shoppingCartService.getByUserId(user1.getId()),
-                productService.getById(product1.getId()));
+                + shoppingCartService.get(user1.getId()) + "\n");
+        shoppingCartService.deleteProduct(shoppingCartService.get(user1.getId()),
+                productService.get(product1.getId()));
         System.out.println("First user's shopping cart with one remaining product: "
-                + shoppingCartService.getByUserId(user1.getId()) + "\n");
+                + shoppingCartService.get(user1.getId()) + "\n");
     }
 }

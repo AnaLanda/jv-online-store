@@ -5,6 +5,8 @@ import java.util.Optional;
 
 public interface GenericDao<T> {
 
+    // SHOULD I HAVE ALL CRUD OPERATIONS HERE?? IF NOT, I'LL ONLY HAVE GET OPERATIONS
+
     T create(T item);
 
     Optional<T> get(Long id);

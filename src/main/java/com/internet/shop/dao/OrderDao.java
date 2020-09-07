@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface OrderDao extends GenericDao<Order> {
 
-    public Order completeOrder(ShoppingCart shoppingCart);
+    Order completeOrder(ShoppingCart shoppingCart);
 
     List<Order> getUserOrders(Long userId);
 }
