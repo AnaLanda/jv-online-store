@@ -19,22 +19,26 @@ public class Application {
         productService.create(product1);
         productService.create(product2);
         productService.create(product3);
-        System.out.println("Original storage list: " + productService.getAllProducts());
+        System.out.println("Original storage list: " + productService.getAllProducts()  + "\n");
         product1.setName("Second-hand guitar");
         product1.setPrice(8000);
         productService.update(product1);
         System.out.println("Storage list with an updated product: "
-                + productService.getAllProducts());
+                + productService.getAllProducts()  + "\n");
         productService.deleteById(product2.getId());
         System.out.println("Storage list after a product was deleted: "
-                + productService.getAllProducts());
-        System.out.println("Updated items: " + productService.getAllProducts());
+                + productService.getAllProducts()  + "\n");
+        System.out.println("Updated items: " + productService.getAllProducts()  + "\n");
+
         UserService userService = (UserService) injector.getInstance(UserService.class);
         User user1 = new User("Dylan", "guitar_lover", "dogsarethebest_101");
         User user2 = new User("Davina", "cello_player", "dogsarethebest_102");
         userService.create(user1);
         userService.create(user2);
         System.out.println("Users: " + userService.getAll() + "\n");
+        user1.setLogin("aspiring_musician");
+        userService.update(user1);
+        System.out.println("User1 with updated login: " + userService.get(user1.getId()) + "\n");
 
         ShoppingCartService shoppingCartService
                 = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);

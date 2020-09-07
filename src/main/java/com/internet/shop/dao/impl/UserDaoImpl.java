@@ -3,9 +3,11 @@ package com.internet.shop.dao.impl;
 import com.internet.shop.dao.UserDao;
 import com.internet.shop.db.Storage;
 import com.internet.shop.lib.Dao;
+import com.internet.shop.model.Product;
 import com.internet.shop.model.User;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 @Dao
 public class UserDaoImpl implements UserDao {
@@ -29,9 +31,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        return get(user.getId())
-                .map(originalUser -> user)
-                .orElse(null);
+        List<User> users = Storage.users;
+        IntStream.range(0, users.size())
+                .filter(index
+                        -> users.get(index).getId().equals(user.getId()))
+                .forEach(index -> users.set(index, user));
+        return user;
     }
 
     @Override
