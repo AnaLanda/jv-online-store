@@ -18,11 +18,10 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart update(ShoppingCart shoppingCart) {
-        List<ShoppingCart> shoppingCarts = getAll();
-        IntStream.range(0, shoppingCarts.size())
+        IntStream.range(0, Storage.shoppingCarts.size())
                 .filter(index
-                        -> shoppingCarts.get(index).getId().equals(shoppingCart.getId()))
-                .forEach(index -> shoppingCarts.set(index, shoppingCart));
+                        -> Storage.shoppingCarts.get(index).getId().equals(shoppingCart.getId()))
+                .forEach(index -> Storage.shoppingCarts.set(index, shoppingCart));
         return shoppingCart;
     }
 
@@ -40,8 +39,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public boolean delete(ShoppingCart shoppingCart) {
-        return Storage.shoppingCarts
-                .removeIf(shoppingCartInStorage -> shoppingCartInStorage.getId()
-                        .equals(shoppingCart.getId()));
+        return Storage.shoppingCarts.removeIf(shoppingCartInStorage ->
+                shoppingCartInStorage.getId().equals(shoppingCart.getId()));
     }
 }
