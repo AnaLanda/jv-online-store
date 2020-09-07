@@ -25,7 +25,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product update(Product product) {
-        List<Product> products = getAllProducts();
+        List<Product> products = getAll();
         IntStream.range(0, products.size())
                 .filter(index
                         -> products.get(index).getId().equals(product.getId()))
@@ -39,7 +39,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public List<Product> getAll() {
         return Storage.products;
     }
 }

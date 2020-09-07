@@ -1,18 +1,13 @@
 package com.internet.shop.dao;
 
+import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
-import java.util.List;
-import java.util.Optional;
 
-public interface ShoppingCartDao {
+public interface ShoppingCartDao extends GenericDao<ShoppingCart> {
 
-    ShoppingCart create(ShoppingCart shoppingCart);
+    ShoppingCart addProduct(ShoppingCart shoppingCart, Product product);
 
-    ShoppingCart update(ShoppingCart shoppingCart);
+    boolean deleteProduct(ShoppingCart shoppingCart, Product product);
 
-    Optional<ShoppingCart> getByUserId(Long userId);
-
-    List<ShoppingCart> getAll();
-
-    boolean delete(ShoppingCart shoppingCart);
+    void clear(ShoppingCart shoppingCart);
 }

@@ -19,7 +19,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getById(Long productId) {
-        return productDao.getById(productId).get();
+        return productDao.get(productId).get();
     }
 
     @Override
@@ -29,11 +29,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean deleteById(Long productId) {
-        return productDao.deleteById(productId);
+        return productDao.delete(productId);
     }
 
     @Override
     public List<Product> getAllProducts() {
-        return productDao.getAllProducts();
+        return productDao.getAll();
     }
 }
