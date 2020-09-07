@@ -4,7 +4,6 @@ import com.internet.shop.dao.OrderDao;
 import com.internet.shop.db.Storage;
 import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Order;
-import com.internet.shop.model.ShoppingCart;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,10 +11,7 @@ import java.util.stream.Collectors;
 @Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
-    public Order completeOrder(ShoppingCart shoppingCart) {
-        Order order = new Order(shoppingCart.getUserId());
-        order.setProducts(List.copyOf(shoppingCart.getProducts()));
-        shoppingCart.getProducts().clear();
+    public Order create(Order order) {
         Storage.addOrder(order);
         return order;
     }
