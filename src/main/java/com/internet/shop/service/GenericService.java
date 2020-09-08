@@ -2,11 +2,11 @@ package com.internet.shop.service;
 
 import java.util.List;
 
-public interface GenericService<T> {
+public interface GenericService<T, K> {
 
-    //SHOULD I ADD THE CREATE & UPDATE & DELETE METHODS HERE????
-
-    T get(Long id);
+    T get(K id);
 
     List<T> getAll();
+
+    boolean deleteById(K id);
 }

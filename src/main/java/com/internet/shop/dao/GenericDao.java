@@ -3,16 +3,16 @@ package com.internet.shop.dao;
 import java.util.List;
 import java.util.Optional;
 
-public interface GenericDao<T> {
+public interface GenericDao<T, K> {
 
     T create(T item);
 
-    Optional<T> getById(Long id);
+    Optional<T> getById(K id);
 
     List<T> getAll();
 
     T update(T item);
 
-    boolean deleteById(Long id);
+    boolean deleteById(K id);
 
 }

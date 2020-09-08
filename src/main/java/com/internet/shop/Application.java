@@ -25,7 +25,7 @@ public class Application {
         productService.update(product1);
         System.out.println("Storage list with an updated product: "
                 + productService.getAll() + "\n");
-        productService.delete(product2.getId());
+        productService.deleteById(product2.getId());
         System.out.println("Storage list after a product was deleted: "
                 + productService.getAll() + "\n");
         System.out.println("Updated items: " + productService.getAll() + "\n");
