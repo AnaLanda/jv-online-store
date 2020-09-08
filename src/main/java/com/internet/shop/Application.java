@@ -38,7 +38,8 @@ public class Application {
         System.out.println("Users: " + userService.getAll() + "\n");
         user1.setLogin("aspiring_musician");
         userService.update(user1);
-        System.out.println("User1 with updated login: " + userService.get(user1.getId()) + "\n");
+        System.out.println("User1 with updated login: "
+                + userService.getById(user1.getId()) + "\n");
 
         ShoppingCartService shoppingCartService
                 = (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
@@ -52,10 +53,10 @@ public class Application {
         shoppingCartService.addProduct(shoppingCart1, product2);
         shoppingCartService.addProduct(shoppingCart1, product3);
         System.out.println("First user's shopping cart with products: "
-                + shoppingCartService.get(user1.getId()) + "\n");
-        shoppingCartService.deleteProduct(shoppingCartService.get(user1.getId()),
-                productService.get(product1.getId()));
+                + shoppingCartService.getById(user1.getId()) + "\n");
+        shoppingCartService.deleteProduct(shoppingCartService.getById(user1.getId()),
+                productService.getById(product1.getId()));
         System.out.println("First user's shopping cart with one remaining product: "
-                + shoppingCartService.get(user1.getId()) + "\n");
+                + shoppingCartService.getById(user1.getId()) + "\n");
     }
 }
