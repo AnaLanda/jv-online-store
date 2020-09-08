@@ -39,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart get(Long userId) {
-        return shoppingCartDao.get(userId).get();
+        return shoppingCartDao.getById(userId).get();
     }
 
     @Override
@@ -49,6 +49,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public boolean delete(ShoppingCart shoppingCart) {
-        return shoppingCartDao.delete(shoppingCart.getId());
+        return shoppingCartDao.deleteById(shoppingCart.getId());
     }
 }

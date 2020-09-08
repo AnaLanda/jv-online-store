@@ -9,5 +9,7 @@ public interface ShoppingCartDao extends GenericDao<ShoppingCart> {
 
     boolean deleteProduct(ShoppingCart shoppingCart, Product product);
 
+    boolean delete(ShoppingCart shoppingCart);
+
     void clear(ShoppingCart shoppingCart);
 }
