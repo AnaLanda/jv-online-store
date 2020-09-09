@@ -1,7 +1,9 @@
 package com.internet.shop.controllers.user;
 
 import com.internet.shop.lib.Injector;
+import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
+import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +14,7 @@ import java.io.IOException;
 public class RegistrationController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
     private final UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
+    private final ShoppingCartService shoppingCartService = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -29,6 +32,8 @@ public class RegistrationController extends HttpServlet {
         if (password.equals(repeatPassword)) {
             User user = new User(name, login, password);
             userService.create(user);
+            ShoppingCart shoppingCart = new ShoppingCart(user.getId());
+            shoppingCartService.create(shoppingCart);
             resp.sendRedirect(req.getContextPath() + "/");
         } else {
             req.setAttribute("message", "Your password and repeat password do not match.");
