@@ -30,7 +30,7 @@
                         <c:out value="${product.price} UAH"/>
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/shopping-cart/products/buy?id=${product.id}">buy</a>
+                        <a href="${pageContext.request.contextPath}/cart/buy?id=${product.id}">buy</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -40,9 +40,8 @@
     <a href="${pageContext.request.contextPath}/products/add">Add a product</a>
     <br />
     <br />
-    <a href="${pageContext.request.contextPath}/shopping-cart/products">View your cart</a>
+    <a href="${pageContext.request.contextPath}/cart/products">View your cart</a>
     <br />
-    <h4 style="color:#a9220e">${message}</h4>
     <br />
     <a href="${pageContext.request.contextPath}/">Return to the main page</a>
 </div>

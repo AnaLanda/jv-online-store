@@ -14,13 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class InjectDataController extends HttpServlet {
-    private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
+    private static final Injector injector = Injector.getInstance("com.internet.shop");
     private final UserService userService =
-            (UserService) INJECTOR.getInstance(UserService.class);
+            (UserService) injector.getInstance(UserService.class);
     private final ProductService productService =
-            (ProductService) INJECTOR.getInstance(ProductService.class);
+            (ProductService) injector.getInstance(ProductService.class);
     private final ShoppingCartService shoppingCartService =
-            (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+            (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -75,22 +75,22 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>displayShoppingCart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.shoppingcart.AddProductsToShoppingCartController</servlet-class>
+        <servlet-name>addProductToCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.cart.AddToCartController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>displayShoppingCart</servlet-name>
-        <url-pattern>/shopping-cart/products</url-pattern>
+        <servlet-name>addProductToCart</servlet-name>
+        <url-pattern>/cart/buy</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>addProductToShoppingCart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.shoppingcart.DisplayShoppingCartController</servlet-class>
+        <servlet-name>displayCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.cart.DisplayCartController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>addProductToShoppingCart</servlet-name>
-        <url-pattern>/shopping-cart/products/buy</url-pattern>
+        <servlet-name>displayCart</servlet-name>
+        <url-pattern>/cart/products</url-pattern>
     </servlet-mapping>
 </web-app>
