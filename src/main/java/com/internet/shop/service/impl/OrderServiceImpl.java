@@ -31,8 +31,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order get(Long id) {
-        return orderDao.get(id).get();
+    public Order getById(Long id) {
+        return orderDao.getById(id).get();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean delete(Long id) {
-        return orderDao.delete(id);
+    public boolean deleteById(Long id) {
+        return orderDao.deleteById(id);
     }
 }

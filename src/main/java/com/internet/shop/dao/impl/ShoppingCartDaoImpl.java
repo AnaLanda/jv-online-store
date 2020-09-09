@@ -26,7 +26,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     }
 
     @Override
-    public Optional<ShoppingCart> getByUserId(Long userId) {
+    public Optional<ShoppingCart> getById(Long userId) {
         return Storage.shoppingCarts.stream()
                 .filter(shoppingCart -> shoppingCart.getUserId().equals(userId))
                 .findFirst();
@@ -41,5 +41,10 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     public boolean delete(ShoppingCart shoppingCart) {
         return Storage.shoppingCarts.removeIf(shoppingCartInStorage ->
                 shoppingCartInStorage.getId().equals(shoppingCart.getId()));
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return Storage.shoppingCarts.removeIf(cart -> cart.getId().equals(id));
     }
 }
