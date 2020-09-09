@@ -18,16 +18,16 @@
                 <th>Name</th>
                 <th>Price</th>
             </tr>
-            <c:forEach var="item" items="${products}">
+            <c:forEach var="product" items="${products}">
                 <tr>
                     <td>
-                        <c:out value="${item.id}"/>
+                        <c:out value="${product.id}"/>
                     </td>
                     <td>
-                        <c:out value="${item.name}"/>
+                        <c:out value="${product.name}"/>
                     </td>
                     <td>
-                        <c:out value="${item.price}"/>
+                        <c:out value="${product.price}"/>
                     </td>
                 </tr>
             </c:forEach>
