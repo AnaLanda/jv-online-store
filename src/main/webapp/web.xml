@@ -81,16 +81,16 @@
 
     <servlet-mapping>
         <servlet-name>displayShoppingCart</servlet-name>
-        <url-pattern>/shopping-cart/products-in-cart</url-pattern>
+        <url-pattern>/shopping-cart/products</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>addProductToShoppingCart</servlet-name>-->
-<!--        <servlet-class>com.internet.shop.controllers.shoppingcart.DisplayShoppingCartController</servlet-class>-->
-<!--    </servlet>-->
+    <servlet>
+        <servlet-name>addProductToShoppingCart</servlet-name>
+        <servlet-class>com.internet.shop.controllers.shoppingcart.DisplayShoppingCartController</servlet-class>
+    </servlet>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>addProductToShoppingCart</servlet-name>-->
-<!--        <url-pattern>/shopping-cart/products/-in-cart</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>addProductToShoppingCart</servlet-name>
+        <url-pattern>/shopping-cart/products/buy</url-pattern>
+    </servlet-mapping>
 </web-app>

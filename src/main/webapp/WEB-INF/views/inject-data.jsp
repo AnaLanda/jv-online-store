@@ -12,10 +12,10 @@
     <a href="${pageContext.request.contextPath}/">Return to the main page</a>
     <br />
     <br />
-    <a href="${pageContext.request.contextPath}/users/all">See the list of all users</a>
+    <a href="${pageContext.request.contextPath}/products/all">Take a look at our products!</a>
     <br />
     <br />
-    <a href="${pageContext.request.contextPath}/products/all">See the list of all products</a>
+    <a href="${pageContext.request.contextPath}/users/all">See a list of our clients</a>
 </div>
 </body>
 </html>

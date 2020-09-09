@@ -7,17 +7,20 @@ import com.internet.shop.model.User;
 import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class InjectDataController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("com.internet.shop");
-    private final UserService userService = (UserService) INJECTOR.getInstance(UserService.class);
-    private final ProductService productService = (ProductService) INJECTOR.getInstance(ProductService.class);
-    private final ShoppingCartService shoppingCartService = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+    private final UserService userService =
+            (UserService) INJECTOR.getInstance(UserService.class);
+    private final ProductService productService =
+            (ProductService) INJECTOR.getInstance(ProductService.class);
+    private final ShoppingCartService shoppingCartService =
+            (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -28,8 +31,12 @@ public class InjectDataController extends HttpServlet {
         userService.create(user1);
         userService.create(user2);
         userService.create(user3);
-        ShoppingCart shoppingCart = new ShoppingCart(user2.getId());
-        shoppingCartService.create(shoppingCart);
+        ShoppingCart shoppingCart1 = new ShoppingCart(user1.getId());
+        shoppingCartService.create(shoppingCart1);
+        ShoppingCart shoppingCart2 = new ShoppingCart(user2.getId());
+        shoppingCartService.create(shoppingCart2);
+        ShoppingCart shoppingCart3 = new ShoppingCart(user3.getId());
+        shoppingCartService.create(shoppingCart3);
         Product ukulele = new Product("Ukulele", 900);
         Product harmonica = new Product("Harmonica", 550);
         Product acousticGuitar = new Product("Acoustic Guitar", 5000);
