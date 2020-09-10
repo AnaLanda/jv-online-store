@@ -20,7 +20,7 @@
 </head>
 <body>
 <div>
-    <h1>Please enter the details of the product you'd like to add to our store.</h1>
+    <h3>Please enter the details of the product you'd like to add to our store.</h3>
     <div class="text">
         <form method="post" action="${pageContext.request.contextPath}/products/add">
             name: <input type="text" required="required" name="name">
