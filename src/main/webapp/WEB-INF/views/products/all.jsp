@@ -30,7 +30,7 @@
                         <c:out value="${product.price} UAH"/>
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/cart/buy?id=${product.id}">buy</a>
+                        <a href="${pageContext.request.contextPath}/cart/products/add?id=${product.id}">buy</a>
                     </td>
                 </tr>
             </c:forEach>
