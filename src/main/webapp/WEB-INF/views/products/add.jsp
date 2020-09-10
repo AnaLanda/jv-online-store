@@ -11,13 +11,13 @@
             font-family: "Courier New", Courier, monospace;
             margin-top: 5%}
         input {width: 20%}
-        #data {margin-top: 5%}
+        .text {margin-top: 5%}
     </style>
 </head>
 <body>
 <div>
     <h1>Please enter the details of the product you'd like to add to our store.</h1>
-    <div id="data">
+    <div class="text">
         <form method="post" action="${pageContext.request.contextPath}/products/add">
             name: <input type="text" required="required" name="name">
             price: <input type="number" required="required" name="price">

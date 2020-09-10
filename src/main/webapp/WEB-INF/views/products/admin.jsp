@@ -6,21 +6,25 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous">
-    <title>Admin Products</title>
     <style>
         div {text-align: center;
             font-family: "Courier New", Courier, monospace;
             margin-top: 5%}
         table {margin-left: auto;
-            margin-right: auto
-            width: 60%;}
-        #data {margin-top: 5%}
+            margin-right: auto}
+        .text {margin-top: 5%;
+            margin-left: 20%;
+            width: 60%;
+            background: transparent;
+            font-size: 1.3rem;
+            font-weight: 450;}
     </style>
+    <title>Admin Products</title>
 </head>
 <body>
 <div>
     <h1>Products</h1>
-    <div id="data">
+    <div class="text">
         <table class="table">
             <tr>
                 <th>ID</th>
