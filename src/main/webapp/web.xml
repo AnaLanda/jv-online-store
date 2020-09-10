@@ -93,4 +93,34 @@
         <servlet-name>displayCart</servlet-name>
         <url-pattern>/cart/products</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>completeOrder</servlet-name>
+        <servlet-class>com.internet.shop.controllers.order.CompleteOrderController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>completeOrder</servlet-name>
+        <url-pattern>/order/complete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getUserOrders</servlet-name>
+        <servlet-class>com.internet.shop.controllers.order.GetAllUserOrdersController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>getUserOrders</servlet-name>
+        <url-pattern>/orders/all</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getOrderDetails</servlet-name>
+        <servlet-class>com.internet.shop.controllers.order.GetOrderDetailsController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>getOrderDetails</servlet-name>
+        <url-pattern>/orders/info</url-pattern>
+    </servlet-mapping>
 </web-app>
