@@ -29,9 +29,6 @@
                     <td>
                         <c:out value="${product.price}"/>
                     </td>
-                    <td>
-                        <a href="${pageContext.request.contextPath}/cart/delete?id=${product.id}">remove</a>
-                    </td>
                 </tr>
             </c:forEach>
         </table>

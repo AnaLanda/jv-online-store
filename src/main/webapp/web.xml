@@ -85,16 +85,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>removeProductFromCart</servlet-name>
-        <servlet-class>com.internet.shop.controllers.cart.DeleteProductFromCartController</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>removeProductFromCart</servlet-name>
-        <url-pattern>/cart/delete</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>displayCart</servlet-name>
         <servlet-class>com.internet.shop.controllers.cart.DisplayCartController</servlet-class>
     </servlet>
