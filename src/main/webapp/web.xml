@@ -123,4 +123,24 @@
         <servlet-name>getOrderDetails</servlet-name>
         <url-pattern>/orders/info</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getAllOrdersAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.admin.GetAllOrdersAdminController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>getAllOrdersAdmin</servlet-name>
+        <url-pattern>/admin/orders</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteOrderAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.admin.DeleteOrderAdminController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>deleteOrderAdmin</servlet-name>
+        <url-pattern>/admin/orders/delete</url-pattern>
+    </servlet-mapping>
 </web-app>

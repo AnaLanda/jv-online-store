@@ -32,9 +32,6 @@
     </div>
     <br />
     <br />
-    <a href="${pageContext.request.contextPath}/orders/all">Return to your orders</a>
-    <br />
-    <br />
     <a href="${pageContext.request.contextPath}/">Return to the main page</a>
 </div>
 </body>
