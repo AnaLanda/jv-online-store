@@ -12,6 +12,7 @@
         div {text-align: center;
             font-family: "Courier New", Courier, monospace;
             margin-top: 5%;}
+        input {width: 10%}
         .text {margin-top: 5%;
             background: transparent;
             font-size: 1.3rem;
@@ -21,7 +22,7 @@
 </head>
 <body>
 <div>
-    <h5>Please enter your user details here if you'd like to buy something from our store.</h5>
+    <h3>Please enter your user details here if you'd like to buy something from our store.</h3>
     <div class="text">
         <h4 style="color:#a9220e">${message}</h4>
         <form method="post" action="${pageContext.request.contextPath}/registration">
