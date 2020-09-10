@@ -65,12 +65,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>addProduct</servlet-name>
-        <servlet-class>com.internet.shop.controllers.product.AddProductController</servlet-class>
+        <servlet-name>addProductAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.admin.AddProductAdminController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>addProduct</servlet-name>
+        <servlet-name>addProductAdmin</servlet-name>
         <url-pattern>/products/add</url-pattern>
     </servlet-mapping>
 
@@ -131,7 +131,7 @@
 
     <servlet-mapping>
         <servlet-name>getAllOrdersAdmin</servlet-name>
-        <url-pattern>/admin/orders</url-pattern>
+        <url-pattern>/orders/admin</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -141,6 +141,26 @@
 
     <servlet-mapping>
         <servlet-name>deleteOrderAdmin</servlet-name>
-        <url-pattern>/admin/orders/delete</url-pattern>
+        <url-pattern>/orders/admin/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getAllProductsAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.admin.GetAllProductsAdminController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>getAllProductsAdmin</servlet-name>
+        <url-pattern>/products/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteProductAdmin</servlet-name>
+        <servlet-class>com.internet.shop.controllers.admin.DeleteProductAdminController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>deleteProductAdmin</servlet-name>
+        <url-pattern>/products/admin/delete</url-pattern>
     </servlet-mapping>
 </web-app>

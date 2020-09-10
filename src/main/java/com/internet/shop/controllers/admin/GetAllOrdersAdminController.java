@@ -3,7 +3,6 @@ package com.internet.shop.controllers.admin;
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Order;
 import com.internet.shop.service.OrderService;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,6 @@ public class GetAllOrdersAdminController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Order> orders = orderService.getAll();
         req.setAttribute("orders", orders);
-        req.getRequestDispatcher("/WEB-INF/views/admin/orders.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/orders/admin.jsp").forward(req, resp);
     }
 }

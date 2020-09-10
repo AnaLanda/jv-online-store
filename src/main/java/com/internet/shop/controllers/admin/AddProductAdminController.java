@@ -1,4 +1,4 @@
-package com.internet.shop.controllers.product;
+package com.internet.shop.controllers.admin;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AddProductController extends HttpServlet {
+public class AddProductAdminController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private final ProductService productService =
             (ProductService) injector.getInstance(ProductService.class);
@@ -29,7 +29,5 @@ public class AddProductController extends HttpServlet {
         Long price = Long.valueOf(productPrice);
         Product product = new Product(name, price);
         productService.create(product);
-        resp.sendRedirect(req.getContextPath() + "/products/all");
     }
-
 }

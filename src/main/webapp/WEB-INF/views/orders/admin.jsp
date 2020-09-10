@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Products</title>
+    <title>Admin Orders</title>
     <style>
         div {text-align: center;}
         table {margin-left: auto; margin-right: auto;}
@@ -10,34 +10,31 @@
 </head>
 <body>
 <div>
-    <h1>Products</h1>
+    <h1>Orders placed at the shop</h1>
     <div>
         <table border="1">
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
+                <th>User ID</th>
             </tr>
-            <c:forEach var="product" items="${products}">
+            <c:forEach var="order" items="${orders}">
                 <tr>
                     <td>
-                        <c:out value="${product.id}"/>
+                        <c:out value="${order.id}"/>
                     </td>
                     <td>
-                        <c:out value="${product.name}"/>
+                        <c:out value="${order.userId}"/>
                     </td>
                     <td>
-                        <c:out value="${product.price} UAH"/>
+                        <a href="${pageContext.request.contextPath}/orders/info?id=${order.id}">details</a>
                     </td>
                     <td>
-                        <a href="${pageContext.request.contextPath}/cart/products/add?id=${product.id}">buy</a>
+                        <a href="${pageContext.request.contextPath}/orders/admin/delete?id=${order.id}">delete</a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
     </div>
-    <br>
-    <a href="${pageContext.request.contextPath}/cart/products">View your cart</a>
     <br />
     <br />
     <a href="${pageContext.request.contextPath}/">Return to the main page</a>

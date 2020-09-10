@@ -14,7 +14,8 @@
         price: <input type="number" required="required" name="price">
         <button type="submit">add</button>
     </form>
-    <a href="${pageContext.request.contextPath}/">Return to the main page</a>
+    <br>
+    <a href="${pageContext.request.contextPath}/products/admin">See all products</a>
 </div>
 </body>
 </html>
