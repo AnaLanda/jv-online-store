@@ -7,11 +7,18 @@
           crossorigin="anonymous">
     <title>Add Product</title>
     <style>
+        body {background: url(https://images.unsplash.com/photo-1539438286255-f600677a2d34?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80);
+            background-size: cover;
+            background-position: center;}
         div {text-align: center;
             font-family: "Courier New", Courier, monospace;
-            margin-top: 5%}
-        input {width: 20%}
-        .text {margin-top: 5%}
+            margin-top: 5%;
+            background: transparent;}
+        input {width: 20%;}
+        .text {margin-top: 5%;
+            background: transparent;
+            font-size: 1.3rem;
+            font-weight: 450;}
     </style>
 </head>
 <body>
@@ -23,7 +30,8 @@
             price: <input type="number" required="required" name="price">
             <button type="submit">add</button>
         </form>
-        <br>
+    </div>
+    <div class="text">
         <a href="${pageContext.request.contextPath}/products/admin">See all products</a>
     </div>
 </div>

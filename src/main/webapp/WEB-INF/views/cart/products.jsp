@@ -49,12 +49,12 @@
         </table>
     </div>
     <hr>
-    <br />
-    <br />
-    <a href="${pageContext.request.contextPath}/products/all">Add more items to your cart!</a>
-    <br />
-    <br />
-    <a href="${pageContext.request.contextPath}/orders/all">See your orders</a>
+    <div class="text">
+        <a href="${pageContext.request.contextPath}/products/all">Add more items to your cart!</a>
+        <br \>
+        <br \>
+        <a href="${pageContext.request.contextPath}/orders/all">See your orders</a>
+    </div>
     <div class="text">
         <a href="${pageContext.request.contextPath}/order/complete"><button>complete order</button></a>
     </div>

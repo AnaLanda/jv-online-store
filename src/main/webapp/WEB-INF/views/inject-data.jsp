@@ -26,12 +26,10 @@
     <h3>Your test data has been added to the database.</h3>
     <div class="text">
         <a href="${pageContext.request.contextPath}/products/all">Take a look at our products!</a>
-        <br />
-        <br />
-        <a href="${pageContext.request.contextPath}/users/all">See a list of our clients</a>
-        <div>
-            <a href="${pageContext.request.contextPath}/"><button>main page</button></a>
-        </div>
+    </div>
+    <div class="text">
+        <a href="${pageContext.request.contextPath}/"><button>main page</button></a>
+    </div>
     </div>
 </div>
 </body>

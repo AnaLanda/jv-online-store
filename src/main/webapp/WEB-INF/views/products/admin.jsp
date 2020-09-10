@@ -9,9 +9,9 @@
     <style>
         div {text-align: center;
             font-family: "Courier New", Courier, monospace;
-            margin-top: 5%}
+            margin-top: 5%;}
         table {margin-left: auto;
-            margin-right: auto}
+            margin-right: auto;}
         .text {margin-top: 5%;
             margin-left: 20%;
             width: 60%;

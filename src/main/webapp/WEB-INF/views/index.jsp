@@ -30,9 +30,6 @@
         <br />
         <br />
         <a href="${pageContext.request.contextPath}/products/all">Take a look at our products!</a>
-        <br />
-        <br />
-        <a href="${pageContext.request.contextPath}/users/all">See a list of our clients</a>
         <div>
             <a href="${pageContext.request.contextPath}/registration"><button>register</button></a>
         </div>

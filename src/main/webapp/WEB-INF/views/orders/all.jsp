@@ -45,7 +45,7 @@
     </div>
     <hr>
 </div>
-<div>
+<div class="text">
     <a href="${pageContext.request.contextPath}/"><button>main page</button></a>
 </div>
 </body>
