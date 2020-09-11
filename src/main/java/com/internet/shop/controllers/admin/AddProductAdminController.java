@@ -28,5 +28,6 @@ public class AddProductAdminController extends HttpServlet {
         Long price = Long.valueOf(productPrice);
         Product product = new Product(name, price);
         productService.create(product);
+        resp.sendRedirect(req.getContextPath() + "/products/admin");
     }
 }
