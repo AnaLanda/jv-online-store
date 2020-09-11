@@ -44,6 +44,9 @@
                     <td>
                         <c:out value="${product.price} UAH"/>
                     </td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/cart/products/delete?id=${product.id}">delete</a>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

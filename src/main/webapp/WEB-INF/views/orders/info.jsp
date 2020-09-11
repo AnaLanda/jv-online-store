@@ -40,7 +40,7 @@
                         <c:out value="${product.name}"/>
                     </td>
                     <td>
-                        <c:out value="${product.price}"/>
+                        <c:out value="${product.price} UAH"/>
                 </tr>
             </c:forEach>
         </table>
