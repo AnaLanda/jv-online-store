@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,22 +19,34 @@
             background: transparent;
             font-size: 1.3rem;
             font-weight: 450;}
-        #mock-data {color: #4a4949}
     </style>
-    <title>Shop</title>
+    <title>Orders</title>
 </head>
 <body>
 <div>
-    <h1>Welcome to our store!</h1>
+    <h1>Your orders</h1>
     <div class="text">
-        <a id="mock-data" href="${pageContext.request.contextPath}/inject-data">Enter test data into the database</a>
-        <br />
-        <br />
-        <a href="${pageContext.request.contextPath}/products/all">Take a look at our products!</a>
-        <div>
-            <a href="${pageContext.request.contextPath}/registration"><button>register</button></a>
-        </div>
+        <table class="table">
+            <tr>
+                <th>ID</th>
+                <th></th>
+            </tr>
+            <c:forEach var="order" items="${orders}">
+                <tr>
+                    <td>
+                        <c:out value="${order.id}"/>
+                    </td>
+                    <td>
+                        <a href="${pageContext.request.contextPath}/orders/info?id=${order.id}">details</a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
+    <hr>
+</div>
+<div class="text">
+    <a href="${pageContext.request.contextPath}/"><button>main page</button></a>
 </div>
 </body>
 </html>
