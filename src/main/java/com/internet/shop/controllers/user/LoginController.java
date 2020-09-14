@@ -3,7 +3,6 @@ package com.internet.shop.controllers.user;
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.User;
 import com.internet.shop.security.AuthenticationService;
-import com.internet.shop.service.UserService;
 import java.io.IOException;
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
@@ -18,7 +17,8 @@ public class LoginController extends HttpServlet {
             (AuthenticationService) injector.getInstance(AuthenticationService.class);
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         req.getRequestDispatcher("WEB-INF/views/login.jsp").forward(req, resp);
     }
 
