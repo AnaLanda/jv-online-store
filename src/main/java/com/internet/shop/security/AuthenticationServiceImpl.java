@@ -4,8 +4,8 @@ import com.internet.shop.lib.Inject;
 import com.internet.shop.lib.Service;
 import com.internet.shop.model.User;
 import com.internet.shop.service.UserService;
-import javax.naming.AuthenticationException;
 import java.util.Optional;
+import javax.naming.AuthenticationException;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
