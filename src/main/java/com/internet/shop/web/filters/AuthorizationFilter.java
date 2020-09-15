@@ -15,19 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class AuthorizationFilter implements Filter {
-    Map<String, List<Role.RoleName>> protectedUrls = new HashMap<>();
+    Map<String, Set<Role.RoleName>> protectedUrls = new HashMap<>();
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private final UserService userService =
             (UserService) injector.getInstance(UserService.class);
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        protectedUrls.put("/users/all", List.of(Role.RoleName.ADMIN));
-        protectedUrls.put("/order/complete", List.of(Role.RoleName.USER));
+        protectedUrls.put("/users/all", Set.of(Role.RoleName.ADMIN));
+        protectedUrls.put("/order/complete", Set.of(Role.RoleName.USER));
     }
 
     @Override
@@ -42,17 +42,11 @@ public class AuthorizationFilter implements Filter {
         }
         HttpSession session = req.getSession();
         Long userId = (Long) session.getAttribute("user_id");
-        if (userId == null || userService.getById(userId) == null) {
-            resp.sendRedirect("/login");
-            return;
-        }
         User user = userService.getById(userId);
         if (isAuthorized(user, protectedUrls.get(requestedUrl))) {
             filterChain.doFilter(req, resp);
-            return;
         } else {
             req.getRequestDispatcher("/WEB-INF/views/access-denied.jsp").forward(req, resp);
-            return;
         }
     }
 
@@ -60,7 +54,7 @@ public class AuthorizationFilter implements Filter {
     public void destroy() {
     }
 
-    private boolean isAuthorized(User user, List<Role.RoleName> authorizedRoles) {
+    private boolean isAuthorized(User user, Set<Role.RoleName> authorizedRoles) {
         for (Role.RoleName authorizedRole : authorizedRoles) {
             for (Role userRole : user.getRoles()) {
                 if (authorizedRole.equals(userRole.getRoleName())) {

@@ -5,6 +5,8 @@
     <title>Access Denied</title>
 </head>
 <body>
-<h3 style="color:#a9220e">You do not have access to this page.</h3>
+<div>
+    <h3 style="color:#a9220e">You do not have access to this page.</h3>
+</div>
 </body>
 </html>

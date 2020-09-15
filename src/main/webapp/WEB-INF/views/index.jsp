@@ -12,6 +12,9 @@
         <br />
         <br />
         <a href="${pageContext.request.contextPath}/products/all">Take a look at our products!</a>
+        <br />
+        <br />
+        <a href="${pageContext.request.contextPath}/users/all">If you're Admin, see who our clients are!</a>
         <div>
             <a href="${pageContext.request.contextPath}/logout"><button>logout</button></a>
         </div>
