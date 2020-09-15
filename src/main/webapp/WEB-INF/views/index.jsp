@@ -13,8 +13,7 @@
         <br />
         <a href="${pageContext.request.contextPath}/products/all">Take a look at our products!</a>
         <div>
-            <a href="${pageContext.request.contextPath}/login"><button>login</button></a>
-            <a href="${pageContext.request.contextPath}/registration"><button>register</button></a>
+            <a href="${pageContext.request.contextPath}/logout"><button>logout</button></a>
         </div>
     </div>
 </div>
