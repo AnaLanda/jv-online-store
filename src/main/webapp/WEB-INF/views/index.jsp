@@ -11,10 +11,13 @@
         <a href="${pageContext.request.contextPath}/inject-data">Enter test data into the database</a>
         <br />
         <br />
-        <a href="${pageContext.request.contextPath}/products/all">Take a look at our products!</a>
+        <a href="${pageContext.request.contextPath}/products/all">If you're our Client, take a look at our products!</a>
         <br />
         <br />
-        <a href="${pageContext.request.contextPath}/users/all">If you're Admin, see who our clients are!</a>
+        <a href="${pageContext.request.contextPath}/users/all">If you're our Admin, see who our clients are!</a>
+        <br />
+        <br />
+        <a href="${pageContext.request.contextPath}/products/admin">Or edit our product range!</a>
         <div>
             <a href="${pageContext.request.contextPath}/logout"><button>logout</button></a>
         </div>
