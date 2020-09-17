@@ -6,7 +6,7 @@
 </head>
 <body>
 <div>
-    <h3>Please enter your user details here if you'd like to buy something from our store.</h3>
+    <h3>Please enter your personal details.</h3>
     <div class="text">
         <h4 style="color:#a9220e">${message}</h4>
         <div id="registration" class="right">

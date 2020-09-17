@@ -7,7 +7,7 @@
 <body>
 <div>
     <h3>Please enter the details of the product you'd like to add to our store.</h3>
-    <div class="text">
+    <div id="registration" class="right">
         <form method="post" action="${pageContext.request.contextPath}/products/add">
             name: <input type="text" required="required" name="name">
             price: <input type="number" required="required" name="price">

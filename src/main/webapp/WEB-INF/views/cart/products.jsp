@@ -44,9 +44,6 @@
     <div class="text">
         <a href="${pageContext.request.contextPath}/order/complete"><button>complete order</button></a>
     </div>
-    <div class="text">
-        <a href="${pageContext.request.contextPath}/"><button>main page</button></a>
-    </div>
 </div>
 </body>
 </html>

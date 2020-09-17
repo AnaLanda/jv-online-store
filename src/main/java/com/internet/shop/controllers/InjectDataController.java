@@ -2,12 +2,14 @@ package com.internet.shop.controllers;
 
 import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
+import com.internet.shop.model.Role;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.model.User;
 import com.internet.shop.service.ProductService;
 import com.internet.shop.service.ShoppingCartService;
 import com.internet.shop.service.UserService;
 import java.io.IOException;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +27,18 @@ public class InjectDataController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User user1 = new User("Tiabeanie", "login", "password");
-        User user2 = new User("Luci", "login", "password");
-        User user3 = new User("Elfo", "login", "password");
+        User user1 = new User("Tiabeanie", "princess", "password123");
+        user1.setRoles(Set.of(Role.of("USER")));
         userService.create(user1);
+        User user2 = new User("Luci", "imp", "password1234");
+        user2.setRoles(Set.of(Role.of("USER")));
         userService.create(user2);
+        User user3 = new User("Elfo", "elf", "password12345");
+        user3.setRoles(Set.of(Role.of("USER")));
         userService.create(user3);
+        User admin = new User("Admin", "admin", "1234");
+        admin.setRoles(Set.of(Role.of("ADMIN")));
+        userService.create(admin);
         ShoppingCart shoppingCart1 = new ShoppingCart(user1.getId());
         shoppingCartService.create(shoppingCart1);
         ShoppingCart shoppingCart2 = new ShoppingCart(user2.getId());
