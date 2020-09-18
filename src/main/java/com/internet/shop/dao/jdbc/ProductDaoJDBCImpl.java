@@ -36,8 +36,19 @@ public class ProductDaoJDBCImpl implements ProductDao {
 
     @Override
     public Optional<Product> getById(Long id) {
-        String query = "SELECT * FROM products WHERE id = ?";
-        return Optional.empty();
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            String query = "SELECT * FROM products WHERE id = ?";
+            PreparedStatement statement =
+                    connection.prepareStatement(query);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                return Optional.of(retrieveProductFromResultSet(resultSet));
+            }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't find product with id " + id + " in the database.", e);
+        }
     }
 
     @Override
@@ -53,5 +64,11 @@ public class ProductDaoJDBCImpl implements ProductDao {
     @Override
     public boolean deleteById(Long id) {
         return false;
+    }
+
+    private Product retrieveProductFromResultSet(ResultSet resultSet) throws SQLException {
+        Product product = new Product(resultSet.getString("name"), Double.valueOf(resultSet.getBigDecimal("price")));
+        product.setId(resultSet.getLong("product_id"));
+        return product;
     }
 }
