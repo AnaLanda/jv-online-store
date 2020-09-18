@@ -26,7 +26,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                item.setId(resultSet.getLong(1));
+                item.setId(resultSet.getLong("product_id"));
             }
             return item;
         } catch (SQLException e) {
@@ -47,7 +47,8 @@ public class ProductDaoJdbcImpl implements ProductDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't find product with id " + id + " in the database.", e);
+            throw new DataProcessingException("Can't find product with id " + id
+                    + " in the database.", e);
         }
     }
 
@@ -79,7 +80,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             while (resultSet.next()) {
-                item.setId(resultSet.getLong(1));
+                item.setId(resultSet.getLong("product_id"));
             }
             return item;
         } catch (SQLException e) {
@@ -97,12 +98,16 @@ public class ProductDaoJdbcImpl implements ProductDao {
             ResultSet resultSet = statement.executeQuery(query);
             return true;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete product with id " + id + " from the database.", e);
+            throw new DataProcessingException("Can't delete product with id " + id
+                    + " from the database.", e);
         }
     }
 
-    private Product retrieveProductFromResultSet(ResultSet resultSet) throws SQLException {
-        Product product = new Product(resultSet.getString("name"), resultSet.getBigDecimal("price").doubleValue());
+    private Product retrieveProductFromResultSet(ResultSet resultSet)
+            throws SQLException {
+        String name = resultSet.getString("name");
+        double price = resultSet.getBigDecimal("price").doubleValue();
+        Product product = new Product(name, price);
         product.setId(resultSet.getLong("product_id"));
         return product;
     }
