@@ -18,7 +18,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Product create(Product item) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "INSERT * INTO products (name, price) VALUES (?, ?)";
+            String query = "INSERT INTO products (name, price) VALUES (?, ?);";
             PreparedStatement statement =
                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, item.getName());
@@ -37,11 +37,11 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Optional<Product> getById(Long id) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM products WHERE id = ?";
+            String query = "SELECT * FROM products WHERE product_id = ? AND deleted=false;";
             PreparedStatement statement =
                     connection.prepareStatement(query);
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return Optional.of(retrieveProductFromResultSet(resultSet));
             }
@@ -55,10 +55,10 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public List<Product> getAll() {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM products";
+            String query = "SELECT * FROM products;";
             PreparedStatement statement =
                     connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
             List<Product> products = new ArrayList<>();
             while (resultSet.next()) {
                 products.add(retrieveProductFromResultSet(resultSet));
@@ -72,16 +72,12 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Product update(Product item) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "UPDATE products SET name = ?, price = ? WHERE id = ?";
+            String query = "UPDATE products SET name = ?, price = ? WHERE product_id = ? AND deleted=false;";
             PreparedStatement statement =
-                    connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                    connection.prepareStatement(query);
             statement.setString(1, item.getName());
             statement.setBigDecimal(2, BigDecimal.valueOf(item.getPrice()));
             statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            while (resultSet.next()) {
-                item.setId(resultSet.getLong("product_id"));
-            }
             return item;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't add " + item + " to the database.", e);
@@ -91,12 +87,11 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public boolean deleteById(Long id) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "DELETE FROM products WHERE id = ?";
+            String query = "UPDATE products SET deleted=true WHERE product_id = ? AND deleted=false;";
             PreparedStatement statement =
                     connection.prepareStatement(query);
             statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery(query);
-            return true;
+            return statement.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't delete product with id " + id
                     + " from the database.", e);

@@ -20,6 +20,7 @@ public class ConnectionUtil {
         dbProperties.put("password", "root1234");
         String url = "jdbc:mysql://localhost:3306/internet_shop?serverTimezone=UTC";
         try {
+            System.out.println("Connection established");
             return DriverManager.getConnection(url, dbProperties);
         } catch (SQLException e) {
             throw new RuntimeException("Can't connect to the DB.", e);
