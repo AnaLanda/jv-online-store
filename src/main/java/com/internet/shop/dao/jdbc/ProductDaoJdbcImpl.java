@@ -26,7 +26,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                item.setId(resultSet.getLong("product_id"));
+                item.setId(resultSet.getLong(1));
             }
             return item;
         } catch (SQLException e) {
@@ -78,10 +78,11 @@ public class ProductDaoJdbcImpl implements ProductDao {
                     connection.prepareStatement(query);
             statement.setString(1, item.getName());
             statement.setBigDecimal(2, BigDecimal.valueOf(item.getPrice()));
+            statement.setLong(3, item.getId());
             statement.executeUpdate();
             return item;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't add " + item + " to the database.", e);
+            throw new DataProcessingException("Can't update " + item + " in the database.", e);
         }
     }
 
