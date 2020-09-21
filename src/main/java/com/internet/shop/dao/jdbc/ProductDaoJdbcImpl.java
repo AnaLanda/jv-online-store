@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Dao
 public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public Product create(Product product) {
