@@ -2,6 +2,7 @@ package com.internet.shop.dao.jdbc;
 
 import com.internet.shop.dao.ProductDao;
 import com.internet.shop.exceptions.DataProcessingException;
+import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Product;
 import com.internet.shop.util.ConnectionUtil;
 import java.math.BigDecimal;
@@ -16,21 +17,21 @@ import java.util.Optional;
 
 public class ProductDaoJdbcImpl implements ProductDao {
     @Override
-    public Product create(Product item) {
+    public Product create(Product product) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String query = "INSERT INTO products (name, price) VALUES (?, ?);";
             PreparedStatement statement =
                     connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, item.getName());
-            statement.setBigDecimal(2, BigDecimal.valueOf(item.getPrice()));
+            statement.setString(1, product.getName());
+            statement.setBigDecimal(2, BigDecimal.valueOf(product.getPrice()));
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                item.setId(resultSet.getLong(1));
+                product.setId(resultSet.getLong(1));
             }
-            return item;
+            return product;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't add " + item + " to the database.", e);
+            throw new DataProcessingException("Can't add " + product + " to the database.", e);
         }
     }
 
@@ -70,19 +71,19 @@ public class ProductDaoJdbcImpl implements ProductDao {
     }
 
     @Override
-    public Product update(Product item) {
+    public Product update(Product product) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String query = "UPDATE products SET name = ?, price = ? "
                     + "WHERE product_id = ? AND deleted = false;";
             PreparedStatement statement =
                     connection.prepareStatement(query);
-            statement.setString(1, item.getName());
-            statement.setBigDecimal(2, BigDecimal.valueOf(item.getPrice()));
-            statement.setLong(3, item.getId());
+            statement.setString(1, product.getName());
+            statement.setBigDecimal(2, BigDecimal.valueOf(product.getPrice()));
+            statement.setLong(3, product.getId());
             statement.executeUpdate();
-            return item;
+            return product;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't update " + item + " in the database.", e);
+            throw new DataProcessingException("Can't update " + product + " in the database.", e);
         }
     }
 
