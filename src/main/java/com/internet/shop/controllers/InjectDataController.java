@@ -19,8 +19,6 @@ public class InjectDataController extends HttpServlet {
     private static final Injector injector = Injector.getInstance("com.internet.shop");
     private final UserService userService =
             (UserService) injector.getInstance(UserService.class);
-    private final ProductService productService =
-            (ProductService) injector.getInstance(ProductService.class);
     private final ShoppingCartService shoppingCartService =
             (ShoppingCartService) injector.getInstance(ShoppingCartService.class);
 
@@ -45,12 +43,6 @@ public class InjectDataController extends HttpServlet {
         shoppingCartService.create(shoppingCart2);
         ShoppingCart shoppingCart3 = new ShoppingCart(user3.getId());
         shoppingCartService.create(shoppingCart3);
-        Product ukulele = new Product("Ukulele", 900);
-        Product harmonica = new Product("Harmonica", 550);
-        Product acousticGuitar = new Product("Acoustic Guitar", 5000);
-        productService.create(ukulele);
-        productService.create(harmonica);
-        productService.create(acousticGuitar);
         req.getRequestDispatcher("/WEB-INF/views/inject-data.jsp").forward(req, resp);
     }
 }

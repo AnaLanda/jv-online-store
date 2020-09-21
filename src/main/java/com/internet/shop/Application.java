@@ -1,11 +1,15 @@
 package com.internet.shop;
 
 import com.internet.shop.dao.jdbc.ProductDaoJdbcImpl;
+import com.internet.shop.lib.Injector;
 import com.internet.shop.model.Product;
 
 public class Application {
+    private static Injector injector = Injector.getInstance("com.internet.shop");
+
     public static void main(String[] args) {
-        ProductDaoJdbcImpl productDaoJdbc = new ProductDaoJdbcImpl();
+        ProductDaoJdbcImpl productDaoJdbc =
+                (ProductDaoJdbcImpl) injector.getInstance(ProductDaoJdbcImpl.class);
         Product product = new Product("Ukulele", 120.99);
         product.setId(1L);
         System.out.println("Added product to DB: "
