@@ -60,10 +60,10 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> getById(Long id) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM users JOIN users_roles "
-                    + "ON users.user_id = users_roles.user_id "
-                    + "JOIN roles ON users_roles.role_id = roles.role_id "
-                    + "WHERE users.user_id = ? AND deleted = false;";
+            String query = "SELECT * FROM users u JOIN users_roles ur "
+                    + "ON u.user_id = ur.user_id "
+                    + "JOIN roles r ON ur.role_id = r.role_id "
+                    + "WHERE u.user_id = ? AND deleted = false;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -140,8 +140,8 @@ public class UserDaoJdbcImpl implements UserDao {
 
     private Set<Role> getUserRoles(Long id) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT role_name FROM roles JOIN users_roles "
-                    + "ON users_roles.role_id = roles.role_id "
+            String query = "SELECT role_name FROM roles r JOIN users_roles ur "
+                    + "ON ur.role_id = r.role_id "
                     + "WHERE user_id = ?;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);

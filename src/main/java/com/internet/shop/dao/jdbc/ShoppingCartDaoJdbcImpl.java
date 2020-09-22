@@ -72,6 +72,16 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart update(ShoppingCart shoppingCart) {
+        String query = "DELETE FROM internet_shop.shopping_carts_products WHERE cart_id = ?;";
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setLong(1, shoppingCart.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't delete product from shopping cart "
+                    + shoppingCart, e);
+        }
+        addProductsToCart(shoppingCart);
         return shoppingCart;
     }
 
@@ -112,8 +122,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     private List<Product> getProductsInCart(Long cartId) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM products JOIN shopping_carts_products "
-                    + "ON products.product_id = shopping_carts_products.product_id "
+            String query = "SELECT * FROM products p JOIN shopping_carts_products sp "
+                    + "ON p.product_id = sp.product_id "
                     + "WHERE cart_id = ?;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, cartId);
