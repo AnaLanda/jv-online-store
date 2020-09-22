@@ -9,9 +9,13 @@ import com.internet.shop.util.ConnectionUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.sql.SQLException;
-import java.util.*;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Dao
 public class UserDaoJdbcImpl implements UserDao {
@@ -56,8 +60,10 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> getById(Long id) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM users JOIN users_roles ON users.user_id = users_roles.user_id JOIN roles"
-                            + " ON users_roles.role_id = roles.role_id WHERE users.user_id = ? AND deleted = false;";
+            String query = "SELECT * FROM users JOIN users_roles "
+                    + "ON users.user_id = users_roles.user_id "
+                    + "JOIN roles ON users_roles.role_id = roles.role_id "
+                    + "WHERE users.user_id = ? AND deleted = false;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
@@ -166,8 +172,8 @@ public class UserDaoJdbcImpl implements UserDao {
 
     private User retrieveUserFromResultSet(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("name");
-        String login  = resultSet.getString("login");
-        String password  = resultSet.getString("password");
+        String login = resultSet.getString("login");
+        String password = resultSet.getString("password");
         Long id = resultSet.getLong("user_id");
         Set<Role> roles = getUserRoles(id);
         User user = new User(name, login, password);

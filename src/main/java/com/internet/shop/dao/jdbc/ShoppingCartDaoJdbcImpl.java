@@ -6,8 +6,14 @@ import com.internet.shop.lib.Dao;
 import com.internet.shop.model.Product;
 import com.internet.shop.model.ShoppingCart;
 import com.internet.shop.util.ConnectionUtil;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Dao
 public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
@@ -60,13 +66,13 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             }
             return carts;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't retrieve products from the database.", e);
+            throw new DataProcessingException("Can't retrieve shoppingCarts from the database.", e);
         }
     }
 
     @Override
     public ShoppingCart update(ShoppingCart shoppingCart) {
-            return shoppingCart;
+        return shoppingCart;
     }
 
     @Override
@@ -91,7 +97,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     private void addProductsToCart(ShoppingCart shoppingCart) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "INSERT INTO shopping_carts_products (cart_id, product_id) VALUES (?, ?);";
+            String query = "INSERT INTO shopping_carts_products (cart_id, product_id) "
+                    + "VALUES (?, ?);";
             for (Product product : shoppingCart.getProducts()) {
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, shoppingCart.getId());
