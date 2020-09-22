@@ -48,7 +48,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             }
             return Optional.empty();
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't find product with id " + id
+            throw new DataProcessingException("Can't find the product with id " + id
                     + " in the database.", e);
         }
     }
@@ -56,7 +56,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
     @Override
     public List<Product> getAll() {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM products;";
+            String query = "SELECT * FROM products WHERE deleted = false;";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             List<Product> products = new ArrayList<>();
@@ -94,7 +94,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
             statement.setLong(1, id);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete product with id " + id
+            throw new DataProcessingException("Can't delete the product with id " + id
                     + " from the database.", e);
         }
     }
