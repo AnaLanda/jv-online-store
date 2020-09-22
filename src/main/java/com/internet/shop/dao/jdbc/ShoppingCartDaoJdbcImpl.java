@@ -78,7 +78,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             statement.setLong(1, shoppingCart.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete product from shopping cart "
+            throw new DataProcessingException("Can't update shopping cart "
                     + shoppingCart, e);
         }
         addProductsToCart(shoppingCart);
@@ -137,8 +137,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
                 products.add(product);
             }
             return products;
-        } catch (SQLException exception) {
-            throw new DataProcessingException(exception.getMessage(), exception);
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't get products from cart with id" + cartId, e);
         }
     }
 

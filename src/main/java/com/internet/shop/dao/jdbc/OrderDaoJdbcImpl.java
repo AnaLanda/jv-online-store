@@ -95,7 +95,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             statement.setLong(1, order.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't delete product from order "
+            throw new DataProcessingException("Can't update order "
                     + order, e);
         }
         addProductsToOrder(order);
@@ -148,8 +148,8 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 products.add(product);
             }
             return products;
-        } catch (SQLException exception) {
-            throw new DataProcessingException(exception.getMessage(), exception);
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't get products from the order with id" + id, e);
         }
     }
 
