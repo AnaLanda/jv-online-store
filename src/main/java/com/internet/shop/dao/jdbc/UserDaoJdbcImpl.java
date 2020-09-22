@@ -74,7 +74,7 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public List<User> getAll() {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM users;";
+            String query = "SELECT * FROM users WHERE deleted = false;";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
             List<User> users = new ArrayList<>();
@@ -128,7 +128,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Can't get the roles for user " + user, e);
+            throw new DataProcessingException("Can't add roles for the user " + user, e);
         }
     }
 
