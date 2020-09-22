@@ -89,7 +89,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
 
     @Override
     public Order update(Order order) {
-        String query = "DELETE FROM internet_shop.orders_products WHERE order_id = ?;";
+        String query = "DELETE FROM orders_products WHERE order_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, order.getId());
