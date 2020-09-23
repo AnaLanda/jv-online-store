@@ -29,6 +29,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             if (resultSet.next()) {
                 shoppingCart.setId(resultSet.getLong(1));
             }
+            addProductsToCart(shoppingCart);
             return shoppingCart;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't add " + shoppingCart + " to the database.", e);
@@ -71,7 +72,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart update(ShoppingCart shoppingCart) {
-        String query = "DELETE FROM internet_shop.shopping_carts_products WHERE cart_id = ?;";
+        String query = "DELETE FROM shopping_carts_products WHERE cart_id = ?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, shoppingCart.getId());
@@ -104,7 +105,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         return deleteById(id);
     }
 
-    private void addProductsToCart(ShoppingCart shoppingCart) {
+    public void addProductsToCart(ShoppingCart shoppingCart) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String query = "INSERT INTO shopping_carts_products (cart_id, product_id) "
                     + "VALUES (?, ?);";
@@ -112,6 +113,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, shoppingCart.getId());
                 statement.setLong(2, product.getId());
+                System.out.println("added " + product);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
