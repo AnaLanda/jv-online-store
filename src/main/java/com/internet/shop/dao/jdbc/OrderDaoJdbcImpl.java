@@ -20,13 +20,15 @@ public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public List<Order> getUserOrders(Long userId) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM orders WHERE user_id = ?";
+            String query = "SELECT order_id, user_id, deleted FROM orders o"
+                    + "INNER JOIN users u ON o.user_id = u.user_id"
+                    + "WHERE o.user_id = 7 AND o.deleted = false AND u.deleted = false;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             List<Order> orders = new ArrayList<>();
             while (resultSet.next()) {
-                orders.add(retrieveOrderFromResultSet(resultSet));
+                orders.add(retrieveOrderFromResultSet(resultSet, connection));
             }
             return orders;
         } catch (SQLException e) {
@@ -46,7 +48,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             if (resultSet.next()) {
                 order.setId(resultSet.getLong(1));
             }
-            addProductsToOrder(order);
+            addProductsToOrder(order, connection);
             return order;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't complete the order " + order, e);
@@ -62,7 +64,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(retrieveOrderFromResultSet(resultSet));
+                return Optional.of(retrieveOrderFromResultSet(resultSet, connection));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -79,7 +81,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             ResultSet resultSet = statement.executeQuery();
             List<Order> orders = new ArrayList<>();
             while (resultSet.next()) {
-                orders.add(retrieveOrderFromResultSet(resultSet));
+                orders.add(retrieveOrderFromResultSet(resultSet, connection));
             }
             return orders;
         } catch (SQLException e) {
@@ -94,11 +96,11 @@ public class OrderDaoJdbcImpl implements OrderDao {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, order.getId());
             statement.executeUpdate();
+            addProductsToOrder(order, connection);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't update order "
                     + order, e);
         }
-        addProductsToOrder(order);
         return order;
     }
 
@@ -116,50 +118,41 @@ public class OrderDaoJdbcImpl implements OrderDao {
         }
     }
 
-    private Order addProductsToOrder(Order order) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "INSERT INTO orders_products (order_id, product_id) VALUES (?, ?);";
-            for (Product product : order.getProducts()) {
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setLong(1, order.getId());
-                statement.setLong(2, product.getId());
-                statement.executeUpdate();
-            }
-            return order;
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't add products to the order " + order, e);
-        }
-    }
-
-    private List<Product> getProductsInOrder(Long id) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM products p JOIN orders_products op "
-                    + "ON p.product_id = op.product_id "
-                    + "WHERE order_id = ?;";
+    private void addProductsToOrder(Order order, Connection connection) throws SQLException {
+        String query = "INSERT INTO orders_products (order_id, product_id) VALUES (?, ?);";
+        for (Product product : order.getProducts()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            List<Product> products = new ArrayList<>();
-            while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                double price = resultSet.getBigDecimal("price").doubleValue();
-                Product product = new Product(name, price);
-                product.setId(resultSet.getLong("product_id"));
-                products.add(product);
-            }
-            return products;
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't get products from the order with id" + id, e);
+            statement.setLong(1, order.getId());
+            statement.setLong(2, product.getId());
+            statement.executeUpdate();
         }
     }
 
-    private Order retrieveOrderFromResultSet(ResultSet resultSet)
+    private List<Product> getProductsInOrder(Long id, Connection connection) throws SQLException {
+        String query = "SELECT * FROM products p JOIN orders_products op "
+                + "ON p.product_id = op.product_id "
+                + "WHERE order_id = ?;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        List<Product> products = new ArrayList<>();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            double price = resultSet.getBigDecimal("price").doubleValue();
+            Product product = new Product(name, price);
+            product.setId(resultSet.getLong("product_id"));
+            products.add(product);
+        }
+        return products;
+    }
+
+    private Order retrieveOrderFromResultSet(ResultSet resultSet, Connection connection)
             throws SQLException {
         Long orderId = resultSet.getLong("order_id");
         Long userId = resultSet.getLong("user_id");
         Order order = new Order(userId);
         order.setId(orderId);
-        order.setProducts(getProductsInOrder(orderId));
+        order.setProducts(getProductsInOrder(orderId, connection));
         return order;
     }
 }

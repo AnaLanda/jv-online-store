@@ -33,7 +33,7 @@ public class UserDaoJdbcImpl implements UserDao {
             if (resultSet.next()) {
                 user.setId(resultSet.getLong(1));
             }
-            addUserRoles(user);
+            addUserRoles(user, connection);
             return user;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't add " + user + " to the database.", e);
@@ -48,7 +48,7 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(retrieveUserFromResultSet(resultSet));
+                return Optional.of(retrieveUserFromResultSet(resultSet, connection));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -60,15 +60,12 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public Optional<User> getById(Long id) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM users u JOIN users_roles ur "
-                    + "ON u.user_id = ur.user_id "
-                    + "JOIN roles r ON ur.role_id = r.role_id "
-                    + "WHERE u.user_id = ? AND deleted = false;";
+            String query = "SELECT * FROM users WHERE user_id = ? AND deleted = false;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                return Optional.of(retrieveUserFromResultSet(resultSet));
+                return Optional.of(retrieveUserFromResultSet(resultSet, connection));
             }
             return Optional.empty();
         } catch (SQLException e) {
@@ -85,7 +82,7 @@ public class UserDaoJdbcImpl implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
-                users.add(retrieveUserFromResultSet(resultSet));
+                users.add(retrieveUserFromResultSet(resultSet, connection));
             }
             return users;
         } catch (SQLException e) {
@@ -104,6 +101,8 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setString(3, user.getPassword());
             statement.setLong(4, user.getId());
             statement.executeUpdate();
+            deleteUserRoles(user, connection);
+            addUserRoles(user, connection);
             return user;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't update " + user + " in the database.", e);
@@ -124,58 +123,56 @@ public class UserDaoJdbcImpl implements UserDao {
         }
     }
 
-    private void addUserRoles(User user) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?);";
-            for (Role role : user.getRoles()) {
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setLong(1, user.getId());
-                statement.setLong(2, getRoleId(role.getRoleName()));
-                statement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't add roles for the user " + user, e);
-        }
-    }
-
-    private Set<Role> getUserRoles(Long id) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT role_name FROM roles r JOIN users_roles ur "
-                    + "ON ur.role_id = r.role_id "
-                    + "WHERE user_id = ?;";
+    private void addUserRoles(User user, Connection connection) throws SQLException {
+        String query = "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?);";
+        for (Role role : user.getRoles()) {
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
-            Set<Role> roles = new HashSet<>();
-            while (resultSet.next()) {
-                roles.add(Role.of(resultSet.getString("role_name")));
-            }
-            return roles;
-        } catch (SQLException exception) {
-            throw new DataProcessingException(exception.getMessage(), exception);
+            statement.setLong(1, user.getId());
+            statement.setLong(2, getRoleId(role.getRoleName(), connection));
+            statement.executeUpdate();
         }
     }
 
-    private Long getRoleId(Role.RoleName roleName) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT role_id FROM roles WHERE role_name = ?;";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, roleName.name());
-            ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
-            Long roleId = resultSet.getLong("role_id");
-            return roleId;
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't get the role id for role " + roleName, e);
-        }
+    private void deleteUserRoles(User user, Connection connection) throws SQLException {
+        String query = "DELETE FROM users_roles WHERE user_id = ?;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, user.getId());
+        statement.executeUpdate();
     }
 
-    private User retrieveUserFromResultSet(ResultSet resultSet) throws SQLException {
+    private Set<Role> getUserRoles(Long id, Connection connection) throws SQLException {
+        String query = "SELECT role_name FROM roles r JOIN users_roles ur "
+                + "ON ur.role_id = r.role_id "
+                + "WHERE user_id = ?;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setLong(1, id);
+        ResultSet resultSet = statement.executeQuery();
+        Set<Role> roles = new HashSet<>();
+        while (resultSet.next()) {
+            roles.add(Role.of(resultSet.getString("role_name")));
+        }
+        return roles;
+    }
+
+    private Long getRoleId(Role.RoleName roleName, Connection connection) throws SQLException {
+        String query = "SELECT role_id FROM roles WHERE role_name = ?;";
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setString(1, roleName.name());
+        ResultSet resultSet = statement.executeQuery();
+        Long roleId = 0L;
+        if (resultSet.next()) {
+            roleId = resultSet.getLong("role_id");
+        }
+        return roleId;
+    }
+
+    private User retrieveUserFromResultSet(ResultSet resultSet, Connection connection)
+            throws SQLException {
         String name = resultSet.getString("name");
         String login = resultSet.getString("login");
         String password = resultSet.getString("password");
         Long id = resultSet.getLong("user_id");
-        Set<Role> roles = getUserRoles(id);
+        Set<Role> roles = getUserRoles(id, connection);
         User user = new User(name, login, password);
         user.setId(id);
         user.setRoles(roles);
