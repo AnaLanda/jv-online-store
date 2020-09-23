@@ -113,7 +113,6 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, shoppingCart.getId());
                 statement.setLong(2, product.getId());
-                System.out.println("added " + product);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
