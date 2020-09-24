@@ -100,3 +100,12 @@ CREATE TABLE `internet_shop`.`orders_products` (
     REFERENCES `internet_shop`.`orders` (`order_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Electric Guitar (Gibson)', '678.99');
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Ukulele (Gibson)', '15.99');
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Piano (Yamaha)', '900');
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Bass Guitar (Gibson)', '155.99');
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Bass Amplifier (Fender)', '50');
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Harp (Steinway)', '999.99');
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Theremin (Moog Music)', '560');
+INSERT INTO `internet_shop`.`products` (`name`, `price`) VALUES ('Acoustic Guitar (Gibson)', '164.99');

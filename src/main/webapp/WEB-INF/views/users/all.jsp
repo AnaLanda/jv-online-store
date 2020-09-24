@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="../style.jsp"%>
+<%@include file="../header.jsp"%>
 <html>
 <head>
     <title>Users</title>
@@ -33,9 +33,6 @@
                 </tr>
             </c:forEach>
         </table>
-    </div>
-    <div class="text">
-        <a href="${pageContext.request.contextPath}/"><button>main page</button></a>
     </div>
 </div>
 </body>

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="../style.jsp"%>
+<%@include file="../header.jsp"%>
 <html>
 <head>
     <title>Products in shopping cart</title>
@@ -25,7 +25,7 @@
                         <c:out value="${product.name}"/>
                     </td>
                     <td>
-                        <c:out value="${product.price} UAH"/>
+                        <c:out value="${product.price} USD"/>
                     </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/cart/products/delete?id=${product.id}">delete</a>
@@ -35,12 +35,6 @@
         </table>
     </div>
     <hr>
-    <div class="text">
-        <a href="${pageContext.request.contextPath}/products/all">Add more items to your cart!</a>
-        <br \>
-        <br \>
-        <a href="${pageContext.request.contextPath}/orders/all">See your orders</a>
-    </div>
     <div class="text">
         <a href="${pageContext.request.contextPath}/order/complete"><button>complete order</button></a>
     </div>
