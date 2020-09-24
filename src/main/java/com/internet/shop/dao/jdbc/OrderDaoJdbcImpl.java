@@ -19,9 +19,9 @@ import java.util.Optional;
 public class OrderDaoJdbcImpl implements OrderDao {
     @Override
     public List<Order> getUserOrders(Long userId) {
-        String query = "SELECT order_id, user_id, deleted FROM orders o"
-                + "INNER JOIN users u ON o.user_id = u.user_id"
-                + "WHERE o.user_id = 7 AND o.deleted = false AND u.deleted = false;";
+        String query = "SELECT o.order_id, o.user_id, o.deleted FROM orders o"
+                + " INNER JOIN users u ON o.user_id = u.user_id"
+                + " WHERE o.user_id = ? AND o.deleted = false AND u.deleted = false;";
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, userId);
