@@ -29,6 +29,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             if (resultSet.next()) {
                 shoppingCart.setId(resultSet.getLong(1));
             }
+            statement.close();
             addProductsToCart(shoppingCart, connection);
             return shoppingCart;
         } catch (SQLException e) {
@@ -77,6 +78,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
                 PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setLong(1, shoppingCart.getId());
             statement.executeUpdate();
+            statement.close();
             addProductsToCart(shoppingCart, connection);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't update shopping cart "
@@ -114,6 +116,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             statement.setLong(1, shoppingCart.getId());
             statement.setLong(2, product.getId());
             statement.executeUpdate();
+            statement.close();
         }
     }
 
@@ -142,6 +145,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         Long userId = resultSet.getLong("user_id");
         ShoppingCart shoppingCart = new ShoppingCart(userId);
         shoppingCart.setId(cartId);
+        //PUT THIS AFTER THE CONNECTION IS CLOSED
         shoppingCart.setProducts(getProductsInCart(cartId, connection));
         return shoppingCart;
     }

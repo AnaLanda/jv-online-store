@@ -48,6 +48,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
             if (resultSet.next()) {
                 order.setId(resultSet.getLong(1));
             }
+            statement.close();
             addProductsToOrder(order, connection);
             return order;
         } catch (SQLException e) {
@@ -96,6 +97,7 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, order.getId());
             statement.executeUpdate();
+            statement.close();
             addProductsToOrder(order, connection);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't update order "

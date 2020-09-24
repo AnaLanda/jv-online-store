@@ -33,6 +33,7 @@ public class UserDaoJdbcImpl implements UserDao {
             if (resultSet.next()) {
                 user.setId(resultSet.getLong(1));
             }
+            statement.close();
             addUserRoles(user, connection);
             return user;
         } catch (SQLException e) {
@@ -44,7 +45,7 @@ public class UserDaoJdbcImpl implements UserDao {
     public Optional<User> findByLogin(String login) {
         String query = "SELECT * FROM users WHERE login = ? AND deleted = false;";
         try (Connection connection = ConnectionUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query);) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -64,10 +65,14 @@ public class UserDaoJdbcImpl implements UserDao {
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
+            User user = null;
             if (resultSet.next()) {
-                return Optional.of(retrieveUserFromResultSet(resultSet, connection));
+                user = retrieveUserFromResultSet(resultSet, connection);
+                statement.close();
+                Set<Role> roles = getUserRoles(id, connection);
+                user.setRoles(roles);
             }
-            return Optional.empty();
+            return Optional.ofNullable(user);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't find the user with id " + id
                     + " in the database.", e);
@@ -83,6 +88,12 @@ public class UserDaoJdbcImpl implements UserDao {
             List<User> users = new ArrayList<>();
             while (resultSet.next()) {
                 users.add(retrieveUserFromResultSet(resultSet, connection));
+            }
+            statement.close();
+            for (User user : users) {
+                Long id = user.getId();
+                Set<Role> roles = getUserRoles(id, connection);
+                user.setRoles(roles);
             }
             return users;
         } catch (SQLException e) {
@@ -101,6 +112,7 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setString(3, user.getPassword());
             statement.setLong(4, user.getId());
             statement.executeUpdate();
+            statement.close();
             deleteUserRoles(user, connection);
             addUserRoles(user, connection);
             return user;
@@ -130,6 +142,7 @@ public class UserDaoJdbcImpl implements UserDao {
             statement.setLong(1, user.getId());
             statement.setLong(2, getRoleId(role.getRoleName(), connection));
             statement.executeUpdate();
+            statement.close();
         }
     }
 
@@ -138,6 +151,7 @@ public class UserDaoJdbcImpl implements UserDao {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setLong(1, user.getId());
         statement.executeUpdate();
+        statement.close();
     }
 
     private Set<Role> getUserRoles(Long id, Connection connection) throws SQLException {
@@ -172,10 +186,8 @@ public class UserDaoJdbcImpl implements UserDao {
         String login = resultSet.getString("login");
         String password = resultSet.getString("password");
         Long id = resultSet.getLong("user_id");
-        Set<Role> roles = getUserRoles(id, connection);
         User user = new User(name, login, password);
         user.setId(id);
-        user.setRoles(roles);
         return user;
     }
 }
