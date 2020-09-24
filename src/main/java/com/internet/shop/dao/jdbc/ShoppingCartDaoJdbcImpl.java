@@ -45,10 +45,14 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
+            ShoppingCart cart = null;
             if (resultSet.next()) {
-                return Optional.of(retrieveCartFromResultSet(resultSet, connection));
+                cart = retrieveCartFromResultSet(resultSet, connection);
+                statement.close();
+                Long cartId = cart.getId();
+                cart.setProducts(getProductsInCart(cartId, connection));
             }
-            return Optional.empty();
+            return Optional.ofNullable(cart);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't find the shopping cart for user id " + userId
                     + " in the database.", e);
@@ -64,6 +68,11 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             List<ShoppingCart> carts = new ArrayList<>();
             while (resultSet.next()) {
                 carts.add(retrieveCartFromResultSet(resultSet, connection));
+            }
+            statement.close();
+            for (ShoppingCart cart : carts) {
+                Long cartId = cart.getId();
+                cart.setProducts(getProductsInCart(cartId, connection));
             }
             return carts;
         } catch (SQLException e) {
@@ -136,6 +145,7 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             product.setId(resultSet.getLong("product_id"));
             products.add(product);
         }
+        statement.close();
         return products;
     }
 
@@ -145,8 +155,6 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
         Long userId = resultSet.getLong("user_id");
         ShoppingCart shoppingCart = new ShoppingCart(userId);
         shoppingCart.setId(cartId);
-        //PUT THIS AFTER THE CONNECTION IS CLOSED
-        shoppingCart.setProducts(getProductsInCart(cartId, connection));
         return shoppingCart;
     }
 }

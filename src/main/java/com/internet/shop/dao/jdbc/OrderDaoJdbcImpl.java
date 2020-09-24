@@ -64,10 +64,14 @@ public class OrderDaoJdbcImpl implements OrderDao {
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
+            Order order = null;
             if (resultSet.next()) {
-                return Optional.of(retrieveOrderFromResultSet(resultSet, connection));
+                order = retrieveOrderFromResultSet(resultSet, connection);
+                statement.close();
+                Long orderId = order.getId();
+                order.setProducts(getProductsInOrder(orderId, connection));
             }
-            return Optional.empty();
+            return Optional.ofNullable(order);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't find the order with id " + id
                     + " in the database.", e);
@@ -83,6 +87,11 @@ public class OrderDaoJdbcImpl implements OrderDao {
             List<Order> orders = new ArrayList<>();
             while (resultSet.next()) {
                 orders.add(retrieveOrderFromResultSet(resultSet, connection));
+            }
+            statement.close();
+            for (Order order : orders) {
+                Long orderId = order.getId();
+                order.setProducts(getProductsInOrder(orderId, connection));
             }
             return orders;
         } catch (SQLException e) {
