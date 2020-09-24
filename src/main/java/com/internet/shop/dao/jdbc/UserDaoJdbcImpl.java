@@ -159,11 +159,10 @@ public class UserDaoJdbcImpl implements UserDao {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, roleName.name());
         ResultSet resultSet = statement.executeQuery();
-        try {
-            resultSet.next();
+        if (resultSet.next()) {
             return resultSet.getLong("role_id");
-        } catch (SQLException e) {
-            throw new DataProcessingException("Can't get role ID for " + roleName, e);
+        } else {
+            throw new RuntimeException("Can't get role ID for " + roleName);
         }
     }
 
