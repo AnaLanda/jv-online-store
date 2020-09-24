@@ -92,7 +92,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
                     + "WHERE product_id = ? AND deleted = false;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
-            return statement.executeUpdate() == 1;
+            return statement.executeUpdate() > 1;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't delete the product with id " + id
                     + " from the database.", e);

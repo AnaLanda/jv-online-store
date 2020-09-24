@@ -116,7 +116,7 @@ public class UserDaoJdbcImpl implements UserDao {
         try (Connection connection = ConnectionUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
-            return statement.executeUpdate() == 1;
+            return statement.executeUpdate() > 1;
         } catch (SQLException e) {
             throw new DataProcessingException("Can't delete the user with id " + id
                     + " from the database.", e);
@@ -159,11 +159,12 @@ public class UserDaoJdbcImpl implements UserDao {
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setString(1, roleName.name());
         ResultSet resultSet = statement.executeQuery();
-        Long roleId = 0L;
-        if (resultSet.next()) {
-            roleId = resultSet.getLong("role_id");
+        try {
+            resultSet.next();
+            return resultSet.getLong("role_id");
+        } catch (SQLException e) {
+            throw new DataProcessingException("Can't get role ID for " + roleName, e);
         }
-        return roleId;
     }
 
     private User retrieveUserFromResultSet(ResultSet resultSet, Connection connection)
