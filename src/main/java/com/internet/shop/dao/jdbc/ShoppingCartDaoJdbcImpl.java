@@ -19,10 +19,10 @@ import java.util.Optional;
 public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "INSERT INTO shopping_carts (user_id) VALUES (?);";
-            PreparedStatement statement =
-                    connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        String query = "INSERT INTO shopping_carts (user_id) VALUES (?);";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement =
+                        connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, shoppingCart.getUserId());
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -38,10 +38,10 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     @Override
     public Optional<ShoppingCart> getById(Long userId) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM shopping_carts "
-                    + "WHERE user_id = ? AND deleted = false;";
-            PreparedStatement statement = connection.prepareStatement(query);
+        String query = "SELECT * FROM shopping_carts "
+                + "WHERE user_id = ? AND deleted = false;";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -56,9 +56,9 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     @Override
     public List<ShoppingCart> getAll() {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "SELECT * FROM shopping_carts WHERE deleted = false;";
-            PreparedStatement statement = connection.prepareStatement(query);
+        String query = "SELECT * FROM shopping_carts WHERE deleted = false;";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             List<ShoppingCart> carts = new ArrayList<>();
             while (resultSet.next()) {
@@ -73,8 +73,8 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart update(ShoppingCart shoppingCart) {
         String query = "DELETE FROM shopping_carts_products WHERE cart_id = ?;";
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setLong(1, shoppingCart.getId());
             statement.executeUpdate();
             addProductsToCart(shoppingCart, connection);
@@ -87,10 +87,10 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
 
     @Override
     public boolean deleteById(Long id) {
-        try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "UPDATE shopping_carts SET deleted = true "
-                    + "WHERE cart_id = ? AND deleted = false;";
-            PreparedStatement statement = connection.prepareStatement(query);
+        String query = "UPDATE shopping_carts SET deleted = true "
+                + "WHERE cart_id = ? AND deleted = false;";
+        try (Connection connection = ConnectionUtil.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setLong(1, id);
             return statement.executeUpdate() == 1;
         } catch (SQLException e) {
