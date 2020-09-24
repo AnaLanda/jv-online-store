@@ -74,7 +74,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
         String query = "UPDATE products SET name = ?, price = ? "
                 + "WHERE product_id = ? AND deleted = false;";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, product.getName());
             statement.setBigDecimal(2, BigDecimal.valueOf(product.getPrice()));
             statement.setLong(3, product.getId());
@@ -90,7 +90,7 @@ public class ProductDaoJdbcImpl implements ProductDao {
         String query = "UPDATE products SET deleted = true "
                 + "WHERE product_id = ? AND deleted = false;";
         try (Connection connection = ConnectionUtil.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+                PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
