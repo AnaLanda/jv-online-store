@@ -67,10 +67,10 @@ public class OrderDaoJdbcImpl implements OrderDao {
             Order order = null;
             if (resultSet.next()) {
                 order = retrieveOrderFromResultSet(resultSet, connection);
-                statement.close();
-                Long orderId = order.getId();
-                order.setProducts(getProductsInOrder(orderId, connection));
             }
+            statement.close();
+            Long orderId = order.getId();
+            order.setProducts(getProductsInOrder(orderId, connection));
             return Optional.ofNullable(order);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't find the order with id " + id

@@ -48,10 +48,10 @@ public class ShoppingCartDaoJdbcImpl implements ShoppingCartDao {
             ShoppingCart cart = null;
             if (resultSet.next()) {
                 cart = retrieveCartFromResultSet(resultSet, connection);
-                statement.close();
-                Long cartId = cart.getId();
-                cart.setProducts(getProductsInCart(cartId, connection));
             }
+            statement.close();
+            Long cartId = cart.getId();
+            cart.setProducts(getProductsInCart(cartId, connection));
             return Optional.ofNullable(cart);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't find the shopping cart for user id " + userId

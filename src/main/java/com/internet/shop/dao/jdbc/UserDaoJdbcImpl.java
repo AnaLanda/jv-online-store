@@ -68,10 +68,10 @@ public class UserDaoJdbcImpl implements UserDao {
             User user = null;
             if (resultSet.next()) {
                 user = retrieveUserFromResultSet(resultSet, connection);
-                statement.close();
-                Set<Role> roles = getUserRoles(id, connection);
-                user.setRoles(roles);
             }
+            statement.close();
+            Set<Role> roles = getUserRoles(id, connection);
+            user.setRoles(roles);
             return Optional.ofNullable(user);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't find the user with id " + id
@@ -176,9 +176,8 @@ public class UserDaoJdbcImpl implements UserDao {
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             return resultSet.getLong("role_id");
-        } else {
-            throw new RuntimeException("Can't get role ID for " + roleName);
         }
+        throw new RuntimeException("Can't get role ID for " + roleName);
     }
 
     private User retrieveUserFromResultSet(ResultSet resultSet, Connection connection)
