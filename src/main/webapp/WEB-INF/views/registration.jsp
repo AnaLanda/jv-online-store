@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="style.jsp"%>
+<%@include file="header.jsp"%>
 <html>
 <head>
     <title>Registration</title>

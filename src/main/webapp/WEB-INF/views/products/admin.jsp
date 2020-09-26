@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="../style.jsp"%>
+<%@include file="../header.jsp"%>
 <html>
 <head>
     <title>Admin Products</title>
@@ -25,7 +25,7 @@
                         <c:out value="${product.name}"/>
                     </td>
                     <td>
-                        <c:out value="${product.price} UAH"/>
+                        <c:out value="${product.price} USD"/>
                     </td>
                     <td>
                         <a href="${pageContext.request.contextPath}/products/admin/delete?id=${product.id}">delete</a>
