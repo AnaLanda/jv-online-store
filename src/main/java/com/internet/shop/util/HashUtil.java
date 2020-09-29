@@ -1,10 +1,9 @@
 package com.internet.shop.util;
 
+import com.internet.shop.model.User;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-
-import com.internet.shop.model.User;
 import org.apache.log4j.Logger;
 
 public class HashUtil {
