@@ -2,6 +2,11 @@
 
 A prototype of an online store with basic functionality for users and admins written in Java. 
 
+## Project Structure
+The project has an N-tier structure and consists of the database layer, the DAO layer for interaction with the database, the service layer which contains the business logic, and the presentation layer.
+Servlets are used to receive and respond to client requests; filters control access to the store's functionality; and the presentation layer is implemented with JSP and Bootstrap. The DAO layer includes two implementations - one for the JDBC, which is used for interaction with the database; and one where data is stored locally in Lists. 
+This project also includes custom-made annotations and an injector, which utilizes Reflection API. 
+
 Store clients can perform the following actions:
  - register on the store's website;
  - log in and out;
@@ -16,11 +21,6 @@ Admins in their turn can:
  - view all orders placed at the store; 
  - edit the store's stock of instruments.
  
-## Project Structure
-The project has an N-tier structure and consists of the database layer, the DAO layer for interaction with the database, the service layer which contains the business logic, and the presentation layer.
-Servlets are used to receive and respond to client requests; filters control access to the store's functionality; and the presentation layer is implemented with JSP and Bootstrap. The DAO layer includes two implementations - one for the JDBC, which is used for interaction with the database; and one where data is stored locally in Lists. 
-This project also includes custom-made annotations and an injector, which utilizes Reflection API. 
-
 ## Technologies Used
 
  - Java 11
@@ -50,4 +50,6 @@ When you launch the website for the first time, click on "Inject data" to add th
 To log in as a User on the website without registration, you can log in as _imp_ with the password _password1234_. 
 
 To log in as an Admin on the website, you should log in as _admin_ with the password _1234_. 
- 
+
+## Author
+([Anastasiia Melnyk(https://github.com/AnaLanda))
