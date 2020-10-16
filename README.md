@@ -1,6 +1,16 @@
 # Online Music Instrument Store
 
-An online store with basic functionality for users and admins written in Java. 
+A prototype of an online store with basic functionality for users and admins written in Java. 
+
+## Project Structure
+The project has an N-tier structure and consists of the database layer, the DAO layer for interaction with the database, the service layer which contains the business logic, and the presentation layer.
+
+Servlets are used to receive and respond to client requests; filters control access to the store's functionality; and the presentation layer is implemented with JSP and Bootstrap. 
+
+The DAO layer includes two implementations - one for the JDBC, which is used for interaction with the database; and one where data is stored locally in Lists. 
+
+This project also includes custom-made annotations and an injector, which utilizes Reflection API. 
+
 Store clients can perform the following actions:
  - register on the store's website;
  - log in and out;
@@ -8,12 +18,13 @@ Store clients can perform the following actions:
  - add items to their cart;
  - delete items from the cart;
  - place orders. 
+
 Admins in their turn can: 
  - view all registered users;
  - delete users from the store's database;
  - view all orders placed at the store; 
  - edit the store's stock of instruments.
-
+ 
 ## Technologies Used
 
  - Java 11
@@ -23,7 +34,7 @@ Admins in their turn can:
  - JSTL 1.2
  - JSP
  - Apache Tomcat
- - Mysql Connector Java 8.0.21
+ - MySQL RDBMS
  - Bootstrap
 
 ## Running the Project
@@ -37,4 +48,13 @@ Replicate the database from the project by copying the script from init_db.sql i
 Insert your own MySQL username and login in dbProperties in the ConnectionUtil class. 
 
 Your MySQL server must be up and running when you launch the project.
- 
+
+When you launch the website for the first time, click on "Inject data" to add the user and admin data to the DB so that the store works properly.
+
+To log in as a User on the website without registration, you can log in as `imp` with the password `password1234`. 
+
+To log in as an Admin on the website, you should log in as `admin` with the password `1234`. 
+
+## Author
+
+[Anastasiia Melnyk](https://github.com/AnaLanda)

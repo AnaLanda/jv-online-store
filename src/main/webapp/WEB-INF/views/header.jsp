@@ -47,6 +47,9 @@
                 <a class="nav-link" href="${pageContext.request.contextPath}/">Home</a>
             </li>
             <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/inject-data">Inject Data</a>
+            </li>
+            <li class="nav-item active">
                 <a class="nav-link" href="${pageContext.request.contextPath}/products/all">Products</a>
             </li>
             <li class="nav-item active">
