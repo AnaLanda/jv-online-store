@@ -56,4 +56,5 @@ To log in as a User on the website without registration, you can log in as `imp`
 To log in as an Admin on the website, you should log in as `admin` with the password `1234`. 
 
 ## Author
+
 [Anastasiia Melnyk](https://github.com/AnaLanda)
