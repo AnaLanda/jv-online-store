@@ -3,12 +3,11 @@
 A prototype of an online store with basic functionality for users and admins written in Java. 
 
 ## Project Structure
-The project has an N-tier structure and consists of the database layer, the DAO layer for interaction with the database, the service layer which contains the business logic, and the presentation layer.
-
-Servlets are used to receive and respond to client requests; filters control access to the store's functionality; and the presentation layer is implemented with JSP and Bootstrap. 
-
-The DAO layer includes two implementations - one for the JDBC, which is used for interaction with the database; and one where data is stored locally in Lists. 
-
+The project has an N-tier structure and consists of the database layer, the DAO layer for interaction with the database, the service layer which contains the business logic, and the presentation layer.  
+The DAO layer is built with the JDBC API.  
+Servlets are used to receive and respond to client requests.  
+Filters control access to the store's functionality.  
+The presentation layer is implemented with JSP and Bootstrap.  
 This project also includes custom-made annotations and an injector, which utilizes Reflection API. 
 
 Store clients can perform the following actions:
